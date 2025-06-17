@@ -1,0 +1,89 @@
+[build-system]
+requires = ["setuptools>=61.0", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "svector"
+version = "1.0.2"
+description = "Official Python SDK for SVECTOR AI Models - Advanced conversational AI and language models"
+readme = "README.md"
+license = {text = "MIT"}
+authors = [
+    {name = "SVECTOR Team", email = "support@svector.co.in"}
+]
+maintainers = [
+    {name = "SVECTOR Team", email = "support@svector.co.in"}
+]
+keywords = [
+    "svector", "ai", "machine-learning", "api", 
+    "llm", "chatbot", "artificial-intelligence", "conversational-ai", "language-models"
+]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "License :: OSI Approved :: MIT License",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Topic :: Internet :: WWW/HTTP :: Dynamic Content",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Software Development :: Libraries :: Python Modules",
+]
+requires-python = ">=3.8"
+dependencies = [
+    "requests>=2.25.0",
+    "typing-extensions>=4.0.0;python_version<'3.10'",
+]
+
+[project.optional-dependencies]
+dev = [
+    "pytest>=6.0",
+    "pytest-cov>=2.10",
+    "black>=21.0",
+    "flake8>=3.8",
+    "mypy>=0.900",
+    "twine>=3.0",
+    "build>=0.7",
+]
+
+[project.urls]
+Homepage = "https://www.svector.co.in"
+Documentation = "https://www.svector.co.in/docs"
+Repository = "https://github.com/svector-corporation/svector-python"
+"Bug Tracker" = "https://github.com/svector-corporation/svector-python/issues"
+Changelog = "https://github.com/svector-corporation/svector-python/blob/main/CHANGELOG.md"
+
+[project.scripts]
+svector = "svector.cli:main"
+
+[tool.setuptools]
+package-dir = {"" = "."}
+
+[tool.setuptools.packages.find]
+where = ["."]
+include = ["svector*"]
+exclude = ["tests*"]
+
+[tool.setuptools.package-data]
+svector = ["py.typed"]
+
+[tool.black]
+line-length = 100
+target-version = ["py38"]
+include = '\.pyi?$'
+
+[tool.mypy]
+python_version = "3.8"
+warn_return_any = true
+warn_unused_configs = true
+disallow_untyped_defs = true
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+python_files = ["test_*.py"]
+python_classes = ["Test*"]
+python_functions = ["test_*"]
