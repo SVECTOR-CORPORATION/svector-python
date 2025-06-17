@@ -28,7 +28,7 @@ class SVECTOR:
     def __init__(
         self,
         api_key: Optional[str] = None,
-        base_url: str = "https://api.svector.co.in",
+        base_url: str = "https://spec-chat.tech",
         timeout: int = 30,
         max_retries: int = 3
     ):

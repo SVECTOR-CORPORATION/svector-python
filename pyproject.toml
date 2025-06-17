@@ -3,8 +3,8 @@ requires = ["setuptools>=61.0", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "svector"
-version = "1.0.2"
+name = "svector-sdk"
+version = "1.0.5"
 description = "Official Python SDK for SVECTOR AI Models - Advanced conversational AI and language models"
 readme = "README.md"
 license = {text = "MIT"}
@@ -16,7 +16,7 @@ maintainers = [
 ]
 keywords = [
     "svector", "ai", "machine-learning", "api", 
-    "llm", "chatbot", "artificial-intelligence", "conversational-ai", "language-models"
+    "llm", "spec-chat", "artificial-intelligence", "conversational-ai", "language-models"
 ]
 classifiers = [
     "Development Status :: 5 - Production/Stable",

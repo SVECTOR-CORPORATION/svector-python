@@ -14,7 +14,7 @@ client = SVECTOR(api_key=api_key)
 
 def example_basic_chat():
     """Basic chat example"""
-    print("🤖 Basic Chat Example")
+    print("Basic Chat Example")
     print("-" * 50)
     
     try:
@@ -112,7 +112,7 @@ def example_conversation():
             answer = response["choices"][0]["message"]["content"]
             conversation.append({"role": "assistant", "content": answer})
             
-            print(f"🤖 Answer {i}: {answer}")
+            print(f"Answer {i}: {answer}")
             print()
             
     except Exception as e:

@@ -64,7 +64,7 @@ def cmd_chat(args):
             files=[{"type": "file", "id": args.file}] if args.file else None
         )
         
-        print("🤖 SVECTOR AI:")
+        print("SVECTOR AI:")
         print(response["choices"][0]["message"]["content"])
         
     except Exception as e:
@@ -168,7 +168,7 @@ def cmd_ask(args):
             files=[{"type": "file", "id": args.file}]
         )
         
-        print("🤖 SVECTOR AI (with file):")
+        print("SVECTOR AI (with file):")
         print(response["choices"][0]["message"]["content"])
         
     except Exception as e:

@@ -6,13 +6,13 @@
 
 The official Python SDK for **SVECTOR AI Models**. Build powerful AI applications with advanced conversational AI and language models.
 
-## 🚀 Installation
+## Installation
 
 ```bash
 pip install svector
 ```
 
-## 🎯 Quick Start
+## Quick Start
 
 ### Basic Usage
 
@@ -50,11 +50,11 @@ for event in stream:
         print(event["choices"][0]["delta"]["content"], end="", flush=True)
 ```
 
-### File Upload and RAG
+### File Upload and Document Processing
 
 ```python
-# Upload a file for RAG
-file_response = client.files.create("document.pdf", purpose="rag")
+# Upload a file for document processing
+file_response = client.files.create("document.pdf", purpose="assistant")
 file_id = file_response["file_id"]
 
 # Ask questions about the uploaded file
@@ -69,7 +69,7 @@ response = client.chat.create(
 print(response["choices"][0]["message"]["content"])
 ```
 
-## 🖥️ Command Line Interface
+## Command Line Interface
 
 SVECTOR also provides a powerful CLI:
 
@@ -86,21 +86,21 @@ svector stream "Write a poem about AI"
 # List available models
 svector models
 
-# Upload files for RAG
+# Upload files for document processing
 svector file upload document.pdf
 
 # Ask questions about files
 svector ask "Summarize this document" --file file-123
 ```
 
-## 📚 API Reference
+## API Reference
 
 ### SVECTOR Client
 
 ```python
 client = SVECTOR(
     api_key="your-api-key",           # Required: Your SVECTOR API key
-    base_url="https://api.svector.co.in",  # Optional: Custom API base URL
+    base_url="https://spec-chat.tech",  # Optional: Custom API base URL
     timeout=30,                       # Optional: Request timeout in seconds
     max_retries=3                     # Optional: Max retry attempts
 )
@@ -116,7 +116,7 @@ response = client.chat.create(
     ],
     temperature=0.7,                  # Optional: 0.0 to 2.0
     max_tokens=150,                   # Optional: Max tokens to generate
-    files=[                           # Optional: Files for RAG
+    files=[                           # Optional: Files for document processing
         {"type": "file", "id": "file-123"}
     ],
     stream=False                      # Optional: Enable streaming
@@ -135,18 +135,18 @@ print(models["models"])
 
 ```python
 # Upload from file path
-response = client.files.create("path/to/file.pdf", purpose="rag")
+response = client.files.create("path/to/file.pdf", purpose="assistant")
 
 # Upload from bytes
 with open("file.pdf", "rb") as f:
-    response = client.files.create(f.read(), purpose="rag", filename="file.pdf")
+    response = client.files.create(f.read(), purpose="assistant", filename="file.pdf")
 
 # Upload from file object
 with open("file.pdf", "rb") as f:
-    response = client.files.create(f, purpose="rag", filename="file.pdf")
+    response = client.files.create(f, purpose="assistant", filename="file.pdf")
 ```
 
-## 🔧 Advanced Examples
+## Advanced Examples
 
 ### Multi-turn Conversation
 
@@ -180,7 +180,7 @@ response = client.chat.create(
 )
 ```
 
-### Multi-file RAG
+### Multi-file Document Processing
 
 ```python
 # Upload multiple files
@@ -219,15 +219,15 @@ except APIError as e:
     print(f"API error: {e}")
 ```
 
-## 🌟 Features
+## Features
 
-- **✅ Complete API Coverage**: Chat completions, streaming, file upload, RAG
-- **✅ Type Safety**: Full type hints for better development experience
-- **✅ Error Handling**: Comprehensive error types and retry logic
-- **✅ Streaming Support**: Real-time response streaming
-- **✅ File Upload**: Support for various file formats and RAG
-- **✅ CLI Interface**: Command-line tool for quick interactions
-- **✅ Production Ready**: Robust error handling and retry mechanisms
+- **Complete API Coverage**: Chat completions, streaming, file upload, document processing
+- **Type Safety**: Full type hints for better development experience
+- **Error Handling**: Comprehensive error types and retry logic
+- **Streaming Support**: Real-time response streaming
+- **File Upload**: Support for various file formats and document processing
+- **CLI Interface**: Command-line tool for quick interactions
+- **Production Ready**: Robust error handling and retry mechanisms
 
 ## 🔑 Authentication
 
@@ -245,7 +245,7 @@ Or pass it directly to the client:
 client = SVECTOR(api_key="your-api-key-here")
 ```
 
-## 🌍 Supported Models
+## Supported Models
 
 - `spec-3-turbo:latest` - General purpose model with excellent performance
 - `spec-3-pro:latest` - Advanced reasoning model for complex tasks
@@ -256,7 +256,7 @@ Get the latest list:
 models = client.models.list()
 ```
 
-## 📋 Requirements
+## Requirements
 
 - Python 3.8+
 - `requests` library (automatically installed)
@@ -271,7 +271,7 @@ models = client.models.list()
 
 This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
 
-## 🚀 Getting Started
+## Getting Started
 
 1. **Install the package**:
    ```bash
@@ -293,4 +293,4 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
 
 ---
 
-**Built with ❤️ by the SVECTOR Team**
+Built by the SVECTOR Team

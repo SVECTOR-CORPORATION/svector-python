@@ -4,8 +4,8 @@ with open("README.md", "r", encoding="utf-8") as fh:
     long_description = fh.read()
 
 setup(
-    name="svector",
-    version="1.0.2",
+    name="svector-sdk",
+    version="1.0.5",
     author="SVECTOR Team",
     author_email="support@svector.co.in",
     description="Official Python SDK for SVECTOR AI Models - Advanced conversational AI and language models",
@@ -46,7 +46,7 @@ setup(
             "mypy",
         ],
     },
-    keywords="svector ai machine-learning llm chatbot artificial-intelligence conversational-ai language-models",
+    keywords="svector ai machine-learning llm spec-chat artificial-intelligence conversational-ai language-models",
     entry_points={
         "console_scripts": [
             "svector=svector.cli:main",
