@@ -4,7 +4,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "svector-sdk"
-version = "1.1.4"
+version = "1.1.6"
 description = "Official Python SDK for SVECTOR AI Models - Advanced conversational AI and language models"
 readme = "README.md"
 license = {text = "MIT"}

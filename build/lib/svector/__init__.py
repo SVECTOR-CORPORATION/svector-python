@@ -1,11 +1,13 @@
 """
-SVECTOR Python SDK
+SVE__version__ = "1.1.6"
+__author__ = "SVECTOR Team"
+__email__ = "support@svector.co.in"R Python SDK
 
 Official Python client for SVECTOR AI Models.
 Advanced conversational AI and language models with API.
 """
 
-__version__ = "1.1.4"
+__version__ = "1.1.5"
 __author__ = "SVECTOR Team"
 __email__ = "support@svector.co.in"
 
