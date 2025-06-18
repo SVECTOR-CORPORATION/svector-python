@@ -1,26 +1,49 @@
 """
-SVE__version__ = "1.0.6"TOR Python SDK
+SVECTOR Python SDK
 
 Official Python client for SVECTOR AI Models.
-Advanced conversational AI and language models.
+Advanced conversational AI and language models with sophisticated API.
 """
 
-__version__ = "1.0.4"
+__version__ = "1.1.2"
 __author__ = "SVECTOR Team"
 __email__ = "support@svector.co.in"
 
-from .client import SVECTOR
-from .errors import (APIError, AuthenticationError, NotFoundError,
-                     PermissionDeniedError, RateLimitError, SVectorError,
-                     UnprocessableEntityError)
+from .client import SVECTOR, AsyncSVECTOR
+from .conversations import (AsyncConversationsAPI, ConversationRequest,
+                            ConversationResponse, ConversationsAPI,
+                            ConversationStreamEvent)
+from .errors import (APIConnectionError, APIConnectionTimeoutError, APIError,
+                     AuthenticationError, ConnectionError, InternalServerError,
+                     NotFoundError, PermissionDeniedError, RateLimitError,
+                     ServerError, SVectorError, TimeoutError,
+                     UnprocessableEntityError, ValidationError)
 
 __all__ = [
+    # Main clients
     "SVECTOR",
+    "AsyncSVECTOR",
+    
+    # Conversations API
+    "ConversationRequest",
+    "ConversationResponse", 
+    "ConversationStreamEvent",
+    "ConversationsAPI",
+    "AsyncConversationsAPI",
+    
+    # Error classes
     "SVectorError",
     "APIError", 
     "AuthenticationError",
     "RateLimitError",
     "NotFoundError",
     "PermissionDeniedError",
-    "UnprocessableEntityError"
+    "UnprocessableEntityError",
+    "InternalServerError",
+    "APIConnectionError",
+    "APIConnectionTimeoutError",
+    "ValidationError",
+    "ServerError",
+    "ConnectionError",
+    "TimeoutError"
 ]

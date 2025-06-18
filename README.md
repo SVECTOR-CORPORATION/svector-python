@@ -1,243 +1,71 @@
 # SVECTOR Python SDK
 
-[![PyPI version](https://badge.fury.io/py/svector-sdk.svg)](https://badge.fury.io/py/svector-sdk)
-[![Python Support](https://img.shields.io/pypi/pyversions/svector-sdk.svg)](https://pypi.org/project/svector-sdk/)
-[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
+[![PyPI version](https://img.shields.io/pypi/v/svector-sdk.svg)](https://pypi.org/project/svector-sdk/)  
+[![Python Version](https://img.shields.io/badge/python-%3E%3D3.8-blue.svg)](https://www.python.org/)  
+[![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)  
+[![Downloads](https://img.shields.io/pypi/dm/svector-sdk.svg)](https://pypi.org/project/svector-sdk/)
 
-The official Python SDK for **SVECTOR's AI models**. 
+**Official Python SDK for accessing SVECTOR APIs.**
 
-**SVECTOR** is a technology-driven organization focused on AI, Mathematics, and Computational research, developing cutting-edge language models including **Spec-3**, **Spec-3-Turbo**, **Spec-3.5**, **Theta-35**, and **Theta-35-Mini**.
+SVECTOR is a technology-driven organization focused on AI, Mathematics, and Computational research, developing high-performance AI models, mathematical reasoning systems, and next-gen automation. This Python SDK provides convenient access to SVECTOR's powerful foundational AI models including **Spec-3**, **Spec-3-Turbo**, **Theta-35**, and **Theta-35-Mini**.
 
-This SDK provides programmatic access to SVECTOR's proprietary AI models for building intelligent applications, while our **Spec Chat** web interface at [spec-chat.tech](https://spec-chat.tech) offers live model interaction.
+The library includes type hints for request parameters and response fields, and offers both synchronous and asynchronous clients powered by [httpx](https://github.com/encode/httpx) and [requests](https://github.com/psf/requests).
 
-## Installation
+## 🚀 Quick Start
 
 ```bash
 pip install svector-sdk
 ```
 
-## Quick Start
-
-### Basic Usage
-
 ```python
 from svector import SVECTOR
 
-# Initialize with your SVECTOR API key
-client = SVECTOR(api_key="your-api-key-here")
+client = SVECTOR(api_key="your-api-key")  # or set SVECTOR_API_KEY env var
 
-# Use SVECTOR's models
-response = client.chat.create(
+# Sophisticated conversation API - just provide instructions and input!
+response = client.conversations.create(
     model="spec-3-turbo:latest",
-    messages=[
-        {"role": "user", "content": "What is artificial intelligence?"}
-    ]
+    instructions="You are a helpful AI assistant that explains complex topics clearly.",
+    input="What is artificial intelligence?",
 )
 
-print(response["choices"][0]["message"]["content"])
+print(response.output)
 ```
 
-### Streaming Responses
+## 📚 Table of Contents
 
-```python
-# Stream responses in real-time
-stream = client.chat.create(
-    model="spec-3-turbo:latest",
-    messages=[
-        {"role": "user", "content": "Write a poem about technology"}
-    ],
-    stream=True
-)
+- [Installation](#installation)
+- [Authentication](#authentication)
+- [Core Features](#core-features)
+- [Conversations API (Recommended)](#conversations-api-recommended)
+- [Chat Completions API (Advanced)](#chat-completions-api-advanced)
+- [Streaming Responses](#streaming-responses)
+- [File Management & Document Processing](#file-management--document-processing)
+- [Models](#models)
+- [Error Handling](#error-handling)
+- [Async Support](#async-support)
+- [Advanced Configuration](#advanced-configuration)
+- [Complete Examples](#complete-examples)
+- [Best Practices](#best-practices)
+- [Contributing](#contributing)
 
-for event in stream:
-    if event.get("choices") and event["choices"][0].get("delta", {}).get("content"):
-        print(event["choices"][0]["delta"]["content"], end="", flush=True)
-```
+## 📦 Installation
 
-### File Upload and Document Processing
-
-```python
-# Upload a file for document processing
-file_response = client.files.create("document.pdf", purpose="assistant")
-file_id = file_response["file_id"]
-
-# Ask questions about the uploaded file
-response = client.chat.create(
-    model="spec-3-turbo:latest",
-    messages=[
-        {"role": "user", "content": "Summarize this document"}
-    ],
-    files=[{"type": "file", "id": file_id}]
-)
-
-print(response["choices"][0]["message"]["content"])
-```
-
-## Command Line Interface
-
-SVECTOR also provides a powerful CLI:
-
+### pip
 ```bash
-# Set up your API key
-svector config set-key your-api-key-here
-
-# Start chatting
-svector chat "Hello, SVECTOR!"
-
-# Stream responses
-svector stream "Write a poem about AI"
-
-# List available models
-svector models
-
-# Upload files for document processing
-svector file upload document.pdf
-
-# Ask questions about files
-svector ask "Summarize this document" --file file-123
+pip install svector-sdk
 ```
 
-## API Reference
-
-### SVECTOR Client
-
-```python
-client = SVECTOR(
-    api_key="your-api-key",           # Required: Your SVECTOR API key
-    base_url="https://spec-chat.tech",  # Optional: Custom API base URL
-    timeout=30,                       # Optional: Request timeout in seconds
-    max_retries=3                     # Optional: Max retry attempts
-)
+### Development Install
+```bash
+git clone https://github.com/svector-corporation/svector-python
+cd svector-python
+pip install -e ".[dev]"
 ```
 
-### Chat Completions
+## 🔐 Authentication
 
-```python
-response = client.chat.create(
-    model="spec-3-turbo:latest",      # Required: Model name
-    messages=[                        # Required: List of messages
-        {"role": "user", "content": "Hello"}
-    ],
-    temperature=0.7,                  # Optional: 0.0 to 2.0
-    max_tokens=150,                   # Optional: Max tokens to generate
-    files=[                           # Optional: Files for document processing
-        {"type": "file", "id": "file-123"}
-    ],
-    stream=False                      # Optional: Enable streaming
-)
-```
-
-### Models API
-
-```python
-# List available models
-models = client.models.list()
-print(models["models"])
-```
-
-### Files API
-
-```python
-# Upload from file path
-response = client.files.create("path/to/file.pdf", purpose="assistant")
-
-# Upload from bytes
-with open("file.pdf", "rb") as f:
-    response = client.files.create(f.read(), purpose="assistant", filename="file.pdf")
-
-# Upload from file object
-with open("file.pdf", "rb") as f:
-    response = client.files.create(f, purpose="assistant", filename="file.pdf")
-```
-
-## Advanced Examples
-
-### Multi-turn Conversation
-
-```python
-conversation = [
-    {"role": "system", "content": "You are a helpful programming assistant."},
-    {"role": "user", "content": "How do I create a function in Python?"},
-]
-
-response = client.chat.create(
-    model="spec-3-turbo:latest",
-    messages=conversation,
-    temperature=0.3
-)
-
-# Add the AI response to conversation history
-conversation.append({
-    "role": "assistant", 
-    "content": response["choices"][0]["message"]["content"]
-})
-
-# Continue the conversation
-conversation.append({
-    "role": "user", 
-    "content": "Can you show me an example?"
-})
-
-response = client.chat.create(
-    model="spec-3-turbo:latest",
-    messages=conversation
-)
-```
-
-### Multi-file Document Processing
-
-```python
-# Upload multiple files
-file1 = client.files.create("technical_specs.pdf")
-file2 = client.files.create("user_manual.pdf")
-
-# Query across multiple documents
-response = client.chat.create(
-    model="spec-3-turbo:latest",
-    messages=[
-        {"role": "user", "content": "Compare the technical specifications with the user manual"}
-    ],
-    files=[
-        {"type": "file", "id": file1["file_id"]},
-        {"type": "file", "id": file2["file_id"]}
-    ]
-)
-```
-
-### Error Handling
-
-```python
-from svector import SVECTOR, AuthenticationError, RateLimitError, APIError
-
-try:
-    client = SVECTOR(api_key="invalid-key")
-    response = client.chat.create(
-        model="spec-3-turbo:latest",
-        messages=[{"role": "user", "content": "Hello"}]
-    )
-except AuthenticationError:
-    print("Invalid API key")
-except RateLimitError:
-    print("Rate limit exceeded")
-except APIError as e:
-    print(f"API error: {e}")
-```
-
-## Features
-
-- **Complete API Coverage**: Chat completions, streaming, file upload, document processing
-- **Type Safety**: Full type hints for better development experience
-- **Error Handling**: Comprehensive error types and retry logic
-- **Streaming Support**: Real-time response streaming
-- **File Upload**: Support for various file formats and document processing
-- **CLI Interface**: Command-line tool for quick interactions
-- **Production Ready**: Robust error handling and retry mechanisms
-
-## 🔑 Authentication
-
-Get your API key from the [SVECTOR Dashboard](https://platform.svector.co.in).
-
-Set it as an environment variable:
+Get your API key from the [SVECTOR Dashboard](https://www.svector.co.in) and set it as an environment variable:
 
 ```bash
 export SVECTOR_API_KEY="your-api-key-here"
@@ -246,84 +74,862 @@ export SVECTOR_API_KEY="your-api-key-here"
 Or pass it directly to the client:
 
 ```python
+from svector import SVECTOR
+
 client = SVECTOR(api_key="your-api-key-here")
 ```
 
-## SVECTOR's AI Models
+## ⭐ Core Features
 
-SVECTOR develops cutting-edge language models designed for scalable, intelligent solutions:
+- **🤖 Sophisticated Conversations API** - Simple instructions + input interface
+- **💬 Advanced Chat Completions** - Full control with role-based messages
+- **🌊 Real-time Streaming** - Server-sent events for live responses
+- **📁 File Processing** - Upload and process documents (PDF, DOCX, TXT, etc.)
+- **🧠 Knowledge Collections** - Organize files for enhanced RAG
+- **🔧 Type Safety** - Full type hints and IntelliSense support
+- **⚡ Async Support** - AsyncSVECTOR client for high-performance applications
+- **🛡️ Robust Error Handling** - Comprehensive error types and retry logic
+- **🌍 Multi-environment** - Works everywhere Python runs
 
-### Available Models:
-- **`spec-3-turbo:latest`** - High-performance general-purpose model with optimized speed and accuracy
-- **`spec-3:latest`** - Advanced reasoning model for complex computational tasks  
-- **`spec-3.5:latest`** - Next-generation model with enhanced capabilities (coming soon)
-- **`theta-35:latest`** - Large-scale model for enterprise applications and complex reasoning
-- **`theta-35-mini:latest`** - Efficient model optimized for speed and resource efficiency
+## 🎯 Conversations API (Recommended)
 
-### Model Selection:
+The **Conversations API** provides a sophisticated, user-friendly interface. Just provide instructions and input - the SDK handles all the complex role management internally!
+
+### Basic Conversation
+
 ```python
-# List all available SVECTOR models
-models = client.models.list()
-print(models["data"])
+from svector import SVECTOR
 
-# Use different models for different tasks
-response = client.chat.create(
-    model="spec-3-turbo:latest",  # Fast and efficient
-    messages=[{"role": "user", "content": "Quick question"}]
+client = SVECTOR()
+
+response = client.conversations.create(
+    model="spec-3-turbo:latest",
+    instructions="You are a helpful assistant that explains things clearly.",
+    input="What is machine learning?",
+    temperature=0.7,
+    max_tokens=200,
 )
 
-response = client.chat.create(
-    model="theta-35:latest",      # Advanced reasoning
-    messages=[{"role": "user", "content": "Complex analysis task"}]
+print(response.output)
+print(f"Request ID: {response.request_id}")
+print(f"Token Usage: {response.usage}")
+```
+
+### Conversation with Context
+
+```python
+response = client.conversations.create(
+    model="spec-3-turbo:latest",
+    instructions="You are a programming tutor that helps students learn coding.",
+    input="Can you show me an example?",
+    context=[
+        "How do I create a function in Python?",
+        "You can create a function using the def keyword followed by the function name and parameters..."
+    ],
+    temperature=0.5,
 )
 ```
 
-## SVECTOR Technology Platform
+### Streaming Conversation
 
-**SVECTOR** is a technology company focused on AI, Mathematics, and Computational research. We develop:
+```python
+stream = client.conversations.create_stream(
+    model="spec-3-turbo:latest",
+    instructions="You are a creative storyteller.",
+    input="Tell me a short story about robots and humans.",
+    stream=True,
+)
 
-- **AI Models**: Spec-3, Spec-3-Turbo, Spec-3.5, Theta-35, Theta-35-Mini and more proprietary models
-- **Mathematical Reasoning Systems**: Advanced computational frameworks for scientific computing
-- **Next-Gen Automation**: Scalable intelligent solutions from quantum AI to enterprise automation
-- **Spec Chat**: Live web interface for model interaction at [spec-chat.tech](https://spec-chat.tech)
+print("Story: ", end="", flush=True)
+for event in stream:
+    if not event.done:
+        print(event.content, end="", flush=True)
+    else:
+        print("\n✓ Story completed!")
+```
 
-This Python SDK provides programmatic access to SVECTOR's models for developers building AI-powered applications and integrations.
+### Document-based Conversation
 
-## Requirements
+```python
+# First upload a document
+with open("research-paper.pdf", "rb") as f:
+    file_response = client.files.create(f, purpose="rag")
 
-- Python 3.8+
-- `requests` library (automatically installed)
+# Then ask questions about it
+response = client.conversations.create(
+    model="spec-3-turbo:latest",
+    instructions="You are a research assistant that analyzes documents.",
+    input="What are the key findings in this paper?",
+    files=[{"type": "file", "id": file_response.file_id}],
+)
+```
 
-## 🤝 Support
+## 🔧 Chat Completions API (Advanced)
 
-- **Documentation**: [https://platform.svector.co.in](https://platform.svector.co.in)
-- **Email**: support@svector.co.in
-- **Issues**: [GitHub Issues](https://github.com/svector-corporation/svector-python/issues)
+For full control over the conversation structure, use the Chat Completions API with role-based messages:
+
+### Basic Chat
+
+```python
+response = client.chat.create(
+    model="spec-3-turbo:latest",
+    messages=[
+        {"role": "system", "content": "You are a helpful assistant."},
+        {"role": "user", "content": "Hello, how are you?"}
+    ],
+    max_tokens=150,
+    temperature=0.7,
+)
+
+print(response["choices"][0]["message"]["content"])
+```
+
+### Multi-turn Conversation
+
+```python
+conversation = [
+    {"role": "system", "content": "You are a helpful programming assistant."},
+    {"role": "user", "content": "How do I reverse a string in Python?"},
+    {"role": "assistant", "content": "You can reverse a string using slicing: string[::-1]"},
+    {"role": "user", "content": "Can you show me other methods?"}
+]
+
+response = client.chat.create(
+    model="spec-3-turbo:latest",
+    messages=conversation,
+    temperature=0.5,
+)
+```
+
+### Developer Role (System-level Instructions)
+
+```python
+response = client.chat.create(
+    model="spec-3-turbo:latest",
+    messages=[
+        {"role": "developer", "content": "You are an expert code reviewer. Provide detailed feedback."},
+        {"role": "user", "content": "Please review this Python code: def add(a, b): return a + b"}
+    ],
+)
+```
+
+## 🌊 Streaming Responses
+
+Both Conversations and Chat APIs support real-time streaming:
+
+### Conversations Streaming
+
+```python
+stream = client.conversations.create_stream(
+    model="spec-3-turbo:latest",
+    instructions="You are a creative writer.",
+    input="Write a poem about technology.",
+    stream=True,
+)
+
+for event in stream:
+    if not event.done:
+        print(event.content, end="", flush=True)
+    else:
+        print("\n✓ Stream completed")
+```
+
+### Chat Streaming
+
+```python
+stream = client.chat.create_stream(
+    model="spec-3-turbo:latest",
+    messages=[
+        {"role": "system", "content": "You are a helpful assistant."},
+        {"role": "user", "content": "Explain quantum computing"}
+    ],
+    stream=True,
+)
+
+for event in stream:
+    if "choices" in event and len(event["choices"]) > 0:
+        delta = event["choices"][0].get("delta", {})
+        content = delta.get("content", "")
+        if content:
+            print(content, end="", flush=True)
+```
+
+## 📁 File Management & Document Processing
+
+Upload and process various file formats for enhanced AI capabilities:
+
+### Upload from File
+
+```python
+from pathlib import Path
+
+# PDF document
+with open("document.pdf", "rb") as f:
+    pdf_file = client.files.create(f, purpose="rag")
+
+# Text file from path
+file_response = client.files.create(
+    Path("notes.txt"), 
+    purpose="rag"
+)
+
+print(f"File uploaded: {file_response.file_id}")
+```
+
+### Upload from Bytes
+
+```python
+with open("document.pdf", "rb") as f:
+    data = f.read()
+
+file_response = client.files.create(
+    data, 
+    purpose="rag", 
+    filename="document.pdf"
+)
+```
+
+### Upload from String Content
+
+```python
+content = """
+# Research Notes
+This document contains important findings...
+"""
+
+file_response = client.files.create(
+    content.encode(), 
+    purpose="rag", 
+    filename="notes.md"
+)
+```
+
+### Document Q&A
+
+```python
+# Upload documents
+with open("manual.pdf", "rb") as f:
+    doc1 = client.files.create(f, purpose="rag")
+
+with open("faq.docx", "rb") as f:
+    doc2 = client.files.create(f, purpose="rag")
+
+# Ask questions about the documents
+answer = client.conversations.create(
+    model="spec-3-turbo:latest",
+    instructions="You are a helpful assistant that answers questions based on the provided documents.",
+    input="What are the key features mentioned in the manual?",
+    files=[
+        {"type": "file", "id": doc1.file_id},
+        {"type": "file", "id": doc2.file_id}
+    ],
+)
+```
+
+## 🧠 Knowledge Collections
+
+Organize multiple files into collections for better performance and context management:
+
+```python
+# Add files to a knowledge collection
+result1 = client.knowledge.add_file("collection-123", "file-456")
+result2 = client.knowledge.add_file("collection-123", "file-789")
+
+# Use the entire collection in conversations
+response = client.conversations.create(
+    model="spec-3-turbo:latest",
+    instructions="You are a research assistant with access to our knowledge base.",
+    input="Summarize all the information about our products.",
+    files=[{"type": "collection", "id": "collection-123"}],
+)
+```
+
+## 🤖 Models
+
+SVECTOR provides several cutting-edge foundational AI models:
+
+### Available Models
+
+```python
+# List all available models
+models = client.models.list()
+print(models["models"])
+```
+
+**SVECTOR's Foundational Models:**
+
+- **`spec-3-turbo:latest`** - Fast, efficient model for most use cases
+- **`spec-3:latest`** - Standard model with balanced performance  
+- **`theta-35-mini:latest`** - Lightweight model for simple tasks
+- **`theta-35:latest`** - Advanced model for complex reasoning
+
+### Model Selection Guide
+
+```python
+# For quick responses and general tasks
+quick_response = client.conversations.create(
+    model="spec-3-turbo:latest",
+    instructions="You are a helpful assistant.",
+    input="What time is it?",
+)
+
+# For complex reasoning and analysis
+complex_analysis = client.conversations.create(
+    model="theta-35:latest",
+    instructions="You are an expert data analyst.",
+    input="Analyze the trends in this quarterly report.",
+    files=[{"type": "file", "id": "report-file-id"}],
+)
+
+# For lightweight tasks
+simple_task = client.conversations.create(
+    model="theta-35-mini:latest",
+    instructions="You help with simple questions.",
+    input="What is 2 + 2?",
+)
+```
+
+## 🛡️ Error Handling
+
+The SDK provides comprehensive error handling with specific error types:
+
+```python
+from svector import (
+    SVECTOR, 
+    AuthenticationError, 
+    RateLimitError, 
+    NotFoundError,
+    APIError
+)
+
+client = SVECTOR()
+
+try:
+    response = client.conversations.create(
+        model="spec-3-turbo:latest",
+        instructions="You are a helpful assistant.",
+        input="Hello world",
+    )
+    
+    print(response.output)
+except AuthenticationError as e:
+    print(f"❌ Invalid API key: {e}")
+    print("💡 Get your API key from https://www.svector.co.in")
+except RateLimitError as e:
+    print(f"⏰ Rate limit exceeded: {e}")
+    print("🔄 Please wait before making another request")
+except NotFoundError as e:
+    print(f"🔍 Resource not found: {e}")
+except APIError as e:
+    print(f"🚨 API error: {e} (Status: {e.status_code})")
+    print(f"📋 Request ID: {getattr(e, 'request_id', 'N/A')}")
+except Exception as e:
+    print(f"💥 Unexpected error: {e}")
+```
+
+### Available Error Types
+
+- **`AuthenticationError`** - Invalid API key or authentication issues
+- **`PermissionDeniedError`** - Insufficient permissions for the resource
+- **`NotFoundError`** - Requested resource not found
+- **`RateLimitError`** - API rate limit exceeded
+- **`UnprocessableEntityError`** - Invalid request data or parameters
+- **`InternalServerError`** - Server-side errors
+- **`APIConnectionError`** - Network connection issues
+- **`APIConnectionTimeoutError`** - Request timeout
+
+## ⚡ Async Support
+
+The SDK provides full async support with `AsyncSVECTOR`:
+
+### Async Basic Usage
+
+```python
+import asyncio
+from svector import AsyncSVECTOR
+
+async def main():
+    async with AsyncSVECTOR() as client:
+        response = await client.conversations.create(
+            model="spec-3-turbo:latest",
+            instructions="You are a helpful assistant.",
+            input="Explain quantum computing in simple terms.",
+        )
+        print(response.output)
+
+asyncio.run(main())
+```
+
+### Async Streaming
+
+```python
+async def streaming_example():
+    async with AsyncSVECTOR() as client:
+        stream = await client.conversations.create_stream(
+            model="spec-3-turbo:latest",
+            instructions="You are a creative storyteller.",
+            input="Write a poem about technology.",
+            stream=True,
+        )
+        
+        async for event in stream:
+            if not event.done:
+                print(event.content, end="", flush=True)
+        print()
+
+asyncio.run(streaming_example())
+```
+
+### Async Concurrent Requests
+
+```python
+async def concurrent_example():
+    async with AsyncSVECTOR() as client:
+        # Multiple async conversations
+        tasks = [
+            client.conversations.create(
+                model="spec-3-turbo:latest",
+                instructions="You are a helpful assistant.",
+                input=f"What is {topic}?"
+            )
+            for topic in ["artificial intelligence", "quantum computing", "blockchain"]
+        ]
+        
+        responses = await asyncio.gather(*tasks, return_exceptions=True)
+        
+        topics = ["artificial intelligence", "quantum computing", "blockchain"]
+        for topic, response in zip(topics, responses):
+            if isinstance(response, Exception):
+                print(f"❌ {topic}: Error - {response}")
+            else:
+                print(f"✅ {topic}: {response.output[:100]}...")
+
+asyncio.run(concurrent_example())
+```
+
+## ⚙️ Advanced Configuration
+
+### Client Configuration
+
+```python
+from svector import SVECTOR
+
+client = SVECTOR(
+    api_key="your-api-key",
+    base_url="https://spec-chat.tech",           # Custom API endpoint
+    timeout=30,                                  # Request timeout in seconds
+    max_retries=3,                               # Retry failed requests
+    verify_ssl=True,                             # SSL verification
+    http_client=None,                            # Custom HTTP client
+)
+```
+
+### Async Configuration
+
+```python
+from svector import AsyncSVECTOR
+
+client = AsyncSVECTOR(
+    api_key="your-api-key",
+    timeout=30,
+    max_retries=3,
+)
+```
+
+### Per-request Options
+
+```python
+response = client.conversations.create(
+    model="spec-3-turbo:latest",
+    instructions="You are a helpful assistant.",
+    input="Hello",
+    timeout=60,           # Override timeout for this request
+    headers={             # Additional headers
+        "X-Custom-Header": "value",
+        "X-Request-Source": "my-app"
+    }
+)
+```
+
+### Raw Response Access
+
+```python
+# Get both response data and raw HTTP response
+response, raw = client.conversations.create_with_response(
+    model="spec-3-turbo:latest",
+    instructions="You are a helpful assistant.",
+    input="Hello",
+)
+
+print(f"Status: {raw.status_code}")
+print(f"Headers: {raw.headers}")
+print(f"Response: {response.output}")
+print(f"Request ID: {response.request_id}")
+```
+
+## 💡 Complete Examples
+
+### Intelligent Chat Application
+
+```python
+from svector import SVECTOR
+
+class IntelligentChat:
+    def __init__(self, api_key: str):
+        self.client = SVECTOR(api_key=api_key)
+        self.conversation_history = []
+
+    def chat(self, user_message: str, system_instructions: str = None) -> str:
+        # Add user message to history
+        self.conversation_history.append(user_message)
+
+        response = self.client.conversations.create(
+            model="spec-3-turbo:latest",
+            instructions=system_instructions or "You are a helpful and friendly AI assistant.",
+            input=user_message,
+            context=self.conversation_history[-10:],  # Keep last 10 messages
+            temperature=0.7,
+        )
+
+        # Add AI response to history
+        self.conversation_history.append(response.output)
+        return response.output
+
+    def stream_chat(self, user_message: str):
+        print("🤖 Assistant: ", end="", flush=True)
+        
+        stream = self.client.conversations.create_stream(
+            model="spec-3-turbo:latest",
+            instructions="You are a helpful AI assistant. Be conversational and engaging.",
+            input=user_message,
+            context=self.conversation_history[-6:],
+            stream=True,
+        )
+
+        full_response = ""
+        for event in stream:
+            if not event.done:
+                print(event.content, end="", flush=True)
+                full_response += event.content
+        print()
+
+        self.conversation_history.append(user_message)
+        self.conversation_history.append(full_response)
+
+    def clear_history(self):
+        self.conversation_history = []
+
+# Usage
+import os
+chat = IntelligentChat(os.environ.get("SVECTOR_API_KEY"))
+
+# Regular chat
+print(chat.chat("Hello! How are you today?"))
+
+# Streaming chat
+chat.stream_chat("Tell me an interesting fact about space.")
+
+# Specialized chat
+print(chat.chat(
+    "Explain quantum computing", 
+    "You are a physics professor who explains complex topics in simple terms."
+))
+```
+
+### Document Analysis System
+
+```python
+from svector import SVECTOR
+from pathlib import Path
+
+class DocumentAnalyzer:
+    def __init__(self):
+        self.client = SVECTOR()
+        self.uploaded_files = []
+
+    def add_document(self, file_path: str) -> str:
+        try:
+            with open(file_path, "rb") as f:
+                file_response = self.client.files.create(
+                    f, 
+                    purpose="rag",
+                    filename=Path(file_path).name
+                )
+            
+            self.uploaded_files.append(file_response.file_id)
+            print(f"✅ Uploaded: {file_path} (ID: {file_response.file_id})")
+            return file_response.file_id
+        except Exception as error:
+            print(f"❌ Failed to upload {file_path}: {error}")
+            raise error
+
+    def add_document_from_text(self, content: str, filename: str) -> str:
+        file_response = self.client.files.create(
+            content.encode(), 
+            purpose="rag", 
+            filename=filename
+        )
+        self.uploaded_files.append(file_response.file_id)
+        return file_response.file_id
+
+    def analyze(self, query: str, analysis_type: str = "insights") -> str:
+        instructions = {
+            "summary": "You are an expert document summarizer. Provide clear, concise summaries.",
+            "questions": "You are an expert analyst. Answer questions based on the provided documents with citations.",
+            "insights": "You are a research analyst. Extract key insights, patterns, and important findings."
+        }
+
+        response = self.client.conversations.create(
+            model="spec-3-turbo:latest",
+            instructions=instructions[analysis_type],
+            input=query,
+            files=[{"type": "file", "id": file_id} for file_id in self.uploaded_files],
+            temperature=0.3,  # Lower temperature for more factual responses
+        )
+
+        return response.output
+
+    def compare_documents(self, query: str) -> str:
+        if len(self.uploaded_files) < 2:
+            raise ValueError("Need at least 2 documents to compare")
+
+        return self.analyze(
+            f"Compare and contrast the documents regarding: {query}",
+            "insights"
+        )
+
+    def get_uploaded_file_ids(self):
+        return self.uploaded_files.copy()
+
+# Usage
+analyzer = DocumentAnalyzer()
+
+# Add multiple documents
+analyzer.add_document("./reports/quarterly-report.pdf")
+analyzer.add_document("./reports/annual-summary.docx")
+analyzer.add_document_from_text("""
+# Meeting Notes
+Key decisions:
+1. Increase R&D budget by 15%
+2. Launch new product line in Q3
+3. Expand team by 5 engineers
+""", "meeting-notes.md")
+
+# Analyze documents
+summary = analyzer.analyze(
+    "Provide a comprehensive summary of all documents",
+    "summary"
+)
+print("📄 Summary:", summary)
+
+insights = analyzer.analyze(
+    "What are the key business decisions and their potential impact?",
+    "insights"
+)
+print("💡 Insights:", insights)
+
+# Compare documents
+comparison = analyzer.compare_documents(
+    "financial performance and future projections"
+)
+print("🔍 Comparison:", comparison)
+```
+
+### Multi-Model Comparison
+
+```python
+from svector import SVECTOR
+import time
+
+class ModelComparison:
+    def __init__(self):
+        self.client = SVECTOR()
+
+    def compare_models(self, prompt: str):
+        models = ["spec-3-turbo:latest", "spec-3:latest", "theta-35:latest", "theta-35-mini:latest"]
+        
+        print(f"🔬 Comparing models for prompt: \"{prompt}\"\n")
+
+        results = []
+        for model in models:
+            try:
+                start_time = time.time()
+                
+                response = self.client.conversations.create(
+                    model=model,
+                    instructions="You are a helpful assistant. Be concise but informative.",
+                    input=prompt,
+                    max_tokens=150,
+                )
+                
+                duration = time.time() - start_time
+                
+                results.append({
+                    "model": model,
+                    "response": response.output,
+                    "duration": duration,
+                    "usage": response.usage,
+                    "success": True
+                })
+                
+            except Exception as e:
+                results.append({
+                    "model": model,
+                    "error": str(e),
+                    "success": False
+                })
+
+        # Display results
+        for result in results:
+            if result["success"]:
+                print(f"📊 Model: {result['model']}")
+                print(f"⏱️  Duration: {result['duration']:.2f}s")
+                print(f"📈 Tokens: {result['usage'].get('total_tokens', 'N/A')}")
+                print(f"💬 Response: {result['response'][:200]}...")
+                print("─" * 80)
+            else:
+                print(f"❌ {result['model']} failed: {result['error']}")
+
+# Usage
+comparison = ModelComparison()
+comparison.compare_models("Explain the concept of artificial general intelligence")
+```
+
+## 🎯 Best Practices
+
+### 1. Use Conversations API for Simplicity
+```python
+# ✅ Recommended: Clean and simple
+response = client.conversations.create(
+    model="spec-3-turbo:latest",
+    instructions="You are a helpful assistant.",
+    input=user_message,
+)
+
+# ❌ More complex: Manual role management
+response = client.chat.create(
+    model="spec-3-turbo:latest",
+    messages=[
+        {"role": "system", "content": "You are a helpful assistant."},
+        {"role": "user", "content": user_message}
+    ],
+)
+```
+
+### 2. Handle Errors Gracefully
+```python
+import time
+
+def chat_with_retry(client, prompt, max_retries=3):
+    for attempt in range(max_retries):
+        try:
+            return client.conversations.create(
+                model="spec-3-turbo:latest",
+                instructions="You are helpful.",
+                input=prompt
+            )
+        except RateLimitError:
+            if attempt < max_retries - 1:
+                wait_time = 2 ** attempt  # Exponential backoff
+                time.sleep(wait_time)
+            else:
+                raise
+```
+
+### 3. Use Appropriate Models
+```python
+# For quick responses
+model = "spec-3-turbo:latest"
+
+# For complex reasoning
+model = "theta-35:latest"
+
+# For simple tasks
+model = "theta-35-mini:latest"
+```
+
+### 4. Optimize File Usage
+```python
+# ✅ Upload once, use multiple times
+with open("document.pdf", "rb") as f:
+    file_response = client.files.create(f, purpose="rag")
+    file_id = file_response.file_id
+
+# Use in multiple conversations
+for question in questions:
+    response = client.conversations.create(
+        model="spec-3-turbo:latest",
+        instructions="You are a document analyst.",
+        input=question,
+        files=[{"type": "file", "id": file_id}],
+    )
+```
+
+### 5. Environment Variables
+```python
+import os
+from svector import SVECTOR
+
+# ✅ Use environment variables
+client = SVECTOR(api_key=os.environ.get("SVECTOR_API_KEY"))
+
+# ❌ Don't hardcode API keys
+client = SVECTOR(api_key="sk-hardcoded-key-here")  # Never do this!
+```
+
+### 6. Use Context Managers for Async
+```python
+# ✅ Recommended: Use context manager
+async with AsyncSVECTOR() as client:
+    response = await client.conversations.create(...)
+
+# ❌ Manual cleanup required
+client = AsyncSVECTOR()
+try:
+    response = await client.conversations.create(...)
+finally:
+    await client.close()
+```
+
+## 🧪 Testing
+
+Run tests with pytest:
+
+```bash
+# Install test dependencies
+pip install -e ".[test]"
+
+# Run tests
+pytest
+
+# Run with coverage
+pytest --cov=svector
+```
+
+## 🤝 Contributing
+
+We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
+
+1. Fork the repository
+2. Create a feature branch
+3. Install development dependencies: `pip install -e ".[dev]"`
+4. Make your changes
+5. Add tests and documentation
+6. Run tests and linting
+7. Submit a pull request
 
 ## 📄 License
 
-This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+MIT License - see [LICENSE](LICENSE) file for details.
 
-## Getting Started
+## 🔗 Links & Support
 
-1. **Install the package**:
-   ```bash
-   pip install svector
-   ```
-
-2. **Get your API key**: Visit [https://platform.svector.co.in](https://platform.svector.co.in)
-
-3. **Start building**:
-   ```python
-   from svector import SVECTOR
-   
-   client = SVECTOR(api_key="your-key")
-   response = client.chat.create(
-       model="spec-3-turbo:latest",
-       messages=[{"role": "user", "content": "Hello, SVECTOR!"}]
-   )
-   ```
+- **🌐 Website**: [https://www.svector.co.in](https://www.svector.co.in)
+- **📚 Documentation**: [https://docs.svector.co.in](https://docs.svector.co.in)
+- **🐛 Issues**: [GitHub Issues](https://github.com/SVECTOR-CORPORATION/svector-python/issues)
+- **💬 Support**: [support@svector.co.in](mailto:support@svector.co.in)
+- **📦 PyPI Package**: [svector-sdk](https://pypi.org/project/svector-sdk/)
 
 ---
 
-Built by the SVECTOR Team
+**Built with ❤️ by SVECTOR Corporation** - *Pushing the boundaries of AI, Mathematics, and Computational research*

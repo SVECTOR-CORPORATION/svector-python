@@ -5,21 +5,20 @@ This client provides both traditional Chat Completions and the new Conversations
 that offers a simplified interface with instructions and input parameters.
 """
 
-import asyncio
 import json
-import os
 import time
+import os
+import asyncio
+from typing import Any, BinaryIO, Dict, Iterator, List, Optional, Union, AsyncIterator
 from pathlib import Path
-from typing import (Any, AsyncIterator, BinaryIO, Dict, Iterator, List,
-                    Optional, Union)
 
-import aiohttp
 import requests
+import aiohttp
 
-from .conversations import AsyncConversationsAPI, ConversationsAPI
-from .errors import (APIError, AuthenticationError, InternalServerError,
-                     NotFoundError, PermissionDeniedError, RateLimitError,
-                     SVectorError, UnprocessableEntityError)
+from .errors import (APIError, AuthenticationError, NotFoundError,
+                     PermissionDeniedError, RateLimitError, SVectorError,
+                     UnprocessableEntityError)
+from .conversations import ConversationsAPI, AsyncConversationsAPI
 
 
 class SVECTOR:
@@ -395,14 +394,7 @@ class ChatAPI:
         **kwargs
     ) -> Iterator[Dict]:
         """Create streaming chat completion"""
-        # Remove 'stream' from kwargs to avoid duplicate parameter
-        kwargs.pop('stream', None)
-        result = self.create(model=model, messages=messages, stream=True, **kwargs)
-        # Since we're passing stream=True, the result should be an Iterator
-        if hasattr(result, '__iter__') and not isinstance(result, dict):
-            return result
-        else:
-            raise ValueError("Expected streaming response but got non-streaming result")
+        return self.create(model=model, messages=messages, stream=True, **kwargs)
         
     def create_with_response(
         self,
@@ -477,26 +469,10 @@ class AsyncChatAPI:
         **kwargs
     ) -> AsyncIterator[Dict]:
         """Async streaming chat completion"""
-        # Remove 'stream' from kwargs to avoid duplicate parameter
-        kwargs.pop('stream', None)
-        
-        data = {
-            "model": model,
-            "messages": messages,
-            "stream": True,
-            **kwargs
-        }
-        
-        # For now, this is a simplified implementation
-        # In a real implementation, you'd need proper async streaming
-        response = await self.client.request("POST", "/api/chat/completions", data=data)
-        
-        # This is a simplified version - in reality you'd need to handle async streaming
-        if isinstance(response, dict) and "choices" in response:
-            yield response
-        else:
-            # Handle streaming response properly
-            yield response
+        # Implementation would need async streaming support
+        # This is a placeholder
+        response = await self.create(model=model, messages=messages, **kwargs)
+        yield response
 
 
 class ModelsAPI:
