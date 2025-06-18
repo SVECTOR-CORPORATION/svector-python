@@ -14,7 +14,7 @@ from svector import SVECTOR, AsyncSVECTOR
 
 def basic_conversation_example():
     """Basic conversation using the API"""
-    print("🚀 SVECTOR Python SDK - Conversations API")
+    print("SVECTOR Python SDK - Conversations API")
     print("=" * 60)
     
     # Initialize client
@@ -63,7 +63,7 @@ def conversation_with_context_example():
 
 def streaming_conversation_example():
     """Streaming conversation example"""
-    print("\n🌊 Streaming Conversation")
+    print("\n Streaming Conversation")
     print("-" * 30)
     
     client = SVECTOR()
@@ -88,7 +88,7 @@ def streaming_conversation_example():
 
 def document_processing_example():
     """Document processing and Q&A example"""
-    print("\n📁 Document Processing & Q&A")
+    print("\n Document Processing & Q&A")
     print("-" * 30)
     
     client = SVECTOR()
@@ -122,11 +122,11 @@ def document_processing_example():
         print("📤 Uploading document...")
         file_response = client.files.create(
             file=sample_content.encode(),
-            purpose="rag",
+            purpose="default",
             filename="svector_research_report.md"
         )
         
-        print(f"✅ Document uploaded successfully! File ID: {file_response['file_id']}")
+        print(f"Document uploaded successfully! File ID: {file_response['file_id']}")
         
         # Ask questions about the document
         print("\n🔍 Asking questions about the document...")
@@ -143,7 +143,7 @@ def document_processing_example():
         print(f"Answer: {response.output}")
         
     except Exception as e:
-        print(f"❌ Document processing failed: {e}")
+        print(f"Document processing failed: {e}")
 
 
 def model_comparison_example():
@@ -160,7 +160,7 @@ def model_comparison_example():
     
     for model in models:
         try:
-            print(f"📊 Model: {model}")
+            print(f"Model: {model}")
             response = client.conversations.create(
                 model=model,
                 instructions="You are a physics teacher who explains complex topics simply.",
@@ -172,12 +172,12 @@ def model_comparison_example():
             print(f"Tokens used: {response.usage.get('total_tokens', 'N/A')}")
             print()
         except Exception as e:
-            print(f"❌ Failed for {model}: {e}\n")
+            print(f"Failed for {model}: {e}\n")
 
 
 def advanced_chat_api_example():
     """Advanced Chat API with role-based messages"""
-    print("\n🔧 Advanced Chat API (Role-based)")
+    print("\n Advanced Chat API (Role-based)")
     print("-" * 30)
     
     client = SVECTOR()
@@ -202,7 +202,7 @@ def advanced_chat_api_example():
 
 def error_handling_example():
     """Demonstrate comprehensive error handling"""
-    print("\n🛡️ Error Handling")
+    print("\n Error Handling")
     print("-" * 30)
     
     from svector import APIError, AuthenticationError, RateLimitError
@@ -216,7 +216,7 @@ def error_handling_example():
             input="Hello"
         )
     except AuthenticationError as e:
-        print(f"✅ Caught authentication error: {e}")
+        print(f"Caught authentication error: {e}")
     except RateLimitError as e:
         print(f"⏰ Rate limit exceeded: {e}")
     except APIError as e:
@@ -246,14 +246,14 @@ async def async_conversation_example():
         topics = ["artificial intelligence", "quantum computing", "blockchain"]
         for topic, response in zip(topics, responses):
             if isinstance(response, Exception):
-                print(f"❌ {topic}: Error - {response}")
+                print(f"{topic}: Error - {response}")
             else:
-                print(f"✅ {topic}: {response.output[:100]}...")
+                print(f"{topic}: {response.output[:100]}...")
 
 
 async def async_streaming_example():
     """Async streaming example"""
-    print("\n🌊 Async Streaming")
+    print("\n Async Streaming")
     print("-" * 30)
     
     async with AsyncSVECTOR() as client:
@@ -277,7 +277,7 @@ async def async_streaming_example():
 
 def intelligent_chat_class_example():
     """Example of building an intelligent chat class"""
-    print("\n🤖 Intelligent Chat Class")
+    print("\nIntelligent Chat Class")
     print("-" * 30)
     
     class IntelligentChat:
@@ -320,7 +320,7 @@ def intelligent_chat_class_example():
 
 def document_analyzer_example():
     """Advanced document analyzer class"""
-    print("\n📄 Document Analyzer")
+    print("\n Document Analyzer")
     print("-" * 30)
     
     class DocumentAnalyzer:
@@ -332,14 +332,14 @@ def document_analyzer_example():
             try:
                 file_response = self.client.files.create(
                     file=content.encode(),
-                    purpose="rag",
+                    purpose="default",
                     filename=filename
                 )
                 file_id = file_response["file_id"]
                 self.uploaded_files.append(file_id)
                 return file_id
             except Exception as e:
-                print(f"❌ Failed to upload {filename}: {e}")
+                print(f"Failed to upload {filename}: {e}")
                 return None
         
         def analyze(self, query: str, analysis_type: str = "insights") -> str:
@@ -393,7 +393,7 @@ def document_analyzer_example():
 
 def main():
     """Run all examples"""
-    print("🚀 SVECTOR Python SDK - Comprehensive Examples")
+    print("SVECTOR Python SDK - Comprehensive Examples")
     print("=" * 60)
     
     # Check if API key is available
@@ -416,7 +416,7 @@ def main():
         
         # Async examples
         print("\n" + "=" * 60)
-        print("🔄 Async Examples")
+        print("Async Examples")
         print("=" * 60)
         
         # Run async examples
@@ -428,7 +428,7 @@ def main():
     except KeyboardInterrupt:
         print("\n👋 Examples interrupted by user")
     except Exception as e:
-        print(f"\n❌ Example failed: {e}")
+        print(f"\nExample failed: {e}")
 
 
 if __name__ == "__main__":

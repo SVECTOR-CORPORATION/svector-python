@@ -5,20 +5,21 @@ This client provides both traditional Chat Completions and the new Conversations
 that offers a simplified interface with instructions and input parameters.
 """
 
-import json
-import time
-import os
 import asyncio
-from typing import Any, BinaryIO, Dict, Iterator, List, Optional, Union, AsyncIterator
+import json
+import os
+import time
 from pathlib import Path
+from typing import (Any, AsyncIterator, BinaryIO, Dict, Iterator, List,
+                    Optional, Union)
 
-import requests
 import aiohttp
+import requests
 
+from .conversations import AsyncConversationsAPI, ConversationsAPI
 from .errors import (APIError, AuthenticationError, NotFoundError,
                      PermissionDeniedError, RateLimitError, SVectorError,
                      UnprocessableEntityError)
-from .conversations import ConversationsAPI, AsyncConversationsAPI
 
 
 class SVECTOR:
@@ -506,7 +507,7 @@ class FilesAPI:
     def create(
         self,
         file: Union[str, bytes, BinaryIO, Path],
-        purpose: str = "rag",
+        purpose: str = "default",
         filename: Optional[str] = None
     ) -> Dict:
         """
@@ -514,7 +515,7 @@ class FilesAPI:
         
         Args:
             file: File path, bytes, Path object, or file-like object
-            purpose: File purpose (default: "rag")
+            purpose: File purpose (default: "default")
             filename: Optional filename override
             
         Returns:
@@ -560,7 +561,7 @@ class AsyncFilesAPI:
     async def create(
         self,
         file: Union[str, bytes, Path],
-        purpose: str = "rag",
+        purpose: str = "default",
         filename: Optional[str] = None
     ) -> Dict:
         """Async file upload"""

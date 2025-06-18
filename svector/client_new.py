@@ -507,7 +507,7 @@ class FilesAPI:
     def create(
         self,
         file: Union[str, bytes, BinaryIO, Path],
-        purpose: str = "rag",
+        purpose: str = "default",
         filename: Optional[str] = None
     ) -> Dict:
         """
@@ -515,7 +515,7 @@ class FilesAPI:
         
         Args:
             file: File path, bytes, Path object, or file-like object
-            purpose: File purpose (default: "rag")
+            purpose: File purpose (default: "default")
             filename: Optional filename override
             
         Returns:
@@ -561,7 +561,7 @@ class AsyncFilesAPI:
     async def create(
         self,
         file: Union[str, bytes, Path],
-        purpose: str = "rag",
+        purpose: str = "default",
         filename: Optional[str] = None
     ) -> Dict:
         """Async file upload"""

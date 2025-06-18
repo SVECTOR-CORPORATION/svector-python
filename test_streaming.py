@@ -13,7 +13,7 @@ from svector import SVECTOR
 
 def test_streaming():
     """Test that streaming works without parameter conflicts"""
-    print("🌊 Testing SVECTOR Streaming Fix")
+    print(" Testing SVECTOR Streaming Fix")
     print("=" * 50)
     
     client = SVECTOR(api_key=os.environ.get("SVECTOR_API_KEY", "test-key"))
@@ -36,7 +36,7 @@ def test_streaming():
                 print(event.content, end="", flush=True)
                 content_received = True
             elif event.done:
-                print("\n✅ Streaming completed successfully!")
+                print("\nStreaming completed successfully!")
                 break
         
         if not content_received:
@@ -44,10 +44,10 @@ def test_streaming():
             
     except Exception as e:
         if "multiple values for keyword argument 'stream'" in str(e):
-            print(f"\n❌ STREAMING BUG STILL EXISTS: {e}")
+            print(f"\nSTREAMING BUG STILL EXISTS: {e}")
             print("The duplicate parameter issue was not fixed!")
         else:
-            print(f"\n✅ Streaming parameter conflict fixed!")
+            print(f"\nStreaming parameter conflict fixed!")
             print(f"Different error (expected with test key): {type(e).__name__}: {e}")
 
 if __name__ == "__main__":

@@ -44,7 +44,7 @@ def get_client():
     api_key = os.getenv('SVECTOR_API_KEY') or config.get('api_key')
     
     if not api_key:
-        print("❌ No API key found.")
+        print("No API key found.")
         print("Set it with: svector config set-key <your-api-key>")
         print("Or set SVECTOR_API_KEY environment variable")
         sys.exit(1)
@@ -68,7 +68,7 @@ def cmd_chat(args):
         print(response["choices"][0]["message"]["content"])
         
     except Exception as e:
-        print(f"❌ Error: {e}")
+        print(f"Error: {e}")
         sys.exit(1)
 
 def cmd_stream(args):
@@ -76,7 +76,7 @@ def cmd_stream(args):
     client = get_client()
     
     try:
-        print("🌊 SVECTOR AI (streaming):")
+        print(" SVECTOR AI (streaming):")
         
         stream = client.chat.create(
             model=args.model,
@@ -91,7 +91,7 @@ def cmd_stream(args):
         print()  # New line at the end
         
     except Exception as e:
-        print(f"❌ Error: {e}")
+        print(f"Error: {e}")
         sys.exit(1)
 
 def cmd_models(args):
@@ -105,7 +105,7 @@ def cmd_models(args):
             print(f"  {i}. {model}")
             
     except Exception as e:
-        print(f"❌ Error: {e}")
+        print(f"Error: {e}")
         sys.exit(1)
 
 def cmd_config(args):
@@ -118,7 +118,7 @@ def cmd_config(args):
             sys.exit(1)
         config["api_key"] = args.api_key
         save_config(config)
-        print("✅ API key saved successfully")
+        print("API key saved successfully")
         
     elif args.config_action == "show":
         print("Current configuration:")
@@ -142,12 +142,12 @@ def cmd_file(args):
             sys.exit(1)
             
         try:
-            print(f"📁 Uploading {args.filepath}...")
-            response = client.files.create(args.filepath, purpose="rag")
-            print(f"✅ File uploaded with ID: {response['file_id']}")
+            print(f" Uploading {args.filepath}...")
+            response = client.files.create(args.filepath, purpose="default")
+            print(f"File uploaded with ID: {response['file_id']}")
             
         except Exception as e:
-            print(f"❌ Error: {e}")
+            print(f"Error: {e}")
             sys.exit(1)
     else:
         print("Usage: svector file upload <filepath>")
@@ -172,7 +172,7 @@ def cmd_ask(args):
         print(response["choices"][0]["message"]["content"])
         
     except Exception as e:
-        print(f"❌ Error: {e}")
+        print(f"Error: {e}")
         sys.exit(1)
 
 def main():

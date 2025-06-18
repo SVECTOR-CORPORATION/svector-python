@@ -1,7 +1,7 @@
 """
 SVECTOR Conversations API
 
-Sophisticated conversation interface with instructions and input.
+conversation interface with instructions and input.
 Handles system role conversion internally for a clean user experience.
 """
 

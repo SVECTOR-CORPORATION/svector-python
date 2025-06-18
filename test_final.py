@@ -13,7 +13,7 @@ from svector import SVECTOR, AsyncSVECTOR
 
 def test_conversations():
     """Test the conversations API"""
-    print("🎯 Testing Conversations API")
+    print(" Testing Conversations API")
     print("-" * 50)
     
     client = SVECTOR(api_key=os.environ.get("SVECTOR_API_KEY", "test-key"))
@@ -26,7 +26,7 @@ def test_conversations():
             input="What is 2+2?",
             max_tokens=20,
         )
-        print(f"✅ Basic conversation: {response.output}")
+        print(f"Basic conversation: {response.output}")
         
         # Conversation with context
         response = client.conversations.create(
@@ -36,14 +36,14 @@ def test_conversations():
             context=["What is 2+2?", "2+2 equals 4."],
             max_tokens=30,
         )
-        print(f"✅ Context conversation: {response.output}")
+        print(f"Context conversation: {response.output}")
         
     except Exception as e:
         print(f"⚠️  Conversation test (expected with test key): {type(e).__name__}")
 
 def test_streaming():
     """Test streaming conversations"""
-    print("\n🌊 Testing Streaming Conversations")
+    print("\n Testing Streaming Conversations")
     print("-" * 50)
     
     client = SVECTOR(api_key=os.environ.get("SVECTOR_API_KEY", "test-key"))
@@ -61,18 +61,18 @@ def test_streaming():
             if not event.done:
                 print(event.content, end="", flush=True)
             else:
-                print("\n✅ Streaming works perfectly!")
+                print("\nStreaming works perfectly!")
                 break
                 
     except Exception as e:
         if "multiple values for keyword argument 'stream'" in str(e):
-            print(f"❌ STREAMING BUG STILL EXISTS!")
+            print(f"STREAMING BUG STILL EXISTS!")
         else:
-            print(f"✅ Streaming parameter fixed! (Different error expected): {type(e).__name__}")
+            print(f"Streaming parameter fixed! (Different error expected): {type(e).__name__}")
 
 def test_chat_completions():
     """Test advanced chat completions API"""
-    print("\n🔧 Testing Chat Completions API")
+    print("\n Testing Chat Completions API")
     print("-" * 50)
     
     client = SVECTOR(api_key=os.environ.get("SVECTOR_API_KEY", "test-key"))
@@ -86,7 +86,7 @@ def test_chat_completions():
             ],
             max_tokens=10,
         )
-        print(f"✅ Chat completion: {response.get('choices', [{}])[0].get('message', {}).get('content', 'Success')}")
+        print(f"Chat completion: {response.get('choices', [{}])[0].get('message', {}).get('content', 'Success')}")
         
     except Exception as e:
         print(f"⚠️  Chat test (expected with test key): {type(e).__name__}")
@@ -104,14 +104,14 @@ async def test_async():
                 input="Say hi",
                 max_tokens=5,
             )
-            print(f"✅ Async conversation: {response.output}")
+            print(f"Async conversation: {response.output}")
             
     except Exception as e:
         print(f"⚠️  Async test (expected with test key): {type(e).__name__}")
 
 def test_error_handling():
     """Test error handling"""
-    print("\n🛡️ Testing Error Handling")
+    print("\n Testing Error Handling")
     print("-" * 50)
     
     from svector import APIError, AuthenticationError
@@ -125,15 +125,15 @@ def test_error_handling():
             input="Test",
         )
     except AuthenticationError:
-        print("✅ AuthenticationError caught correctly")
+        print("AuthenticationError caught correctly")
     except APIError as e:
-        print(f"✅ APIError caught: {type(e).__name__}")
+        print(f"APIError caught: {type(e).__name__}")
     except Exception as e:
-        print(f"✅ Error handling works: {type(e).__name__}")
+        print(f"Error handling works: {type(e).__name__}")
 
 def main():
     """Run all tests"""
-    print("🚀 SVECTOR Python SDK v1.1.2 - Comprehensive Test Suite")
+    print("SVECTOR Python SDK v1.1.2 - Comprehensive Test Suite")
     print("=" * 70)
     
     test_conversations()
@@ -150,14 +150,14 @@ def main():
     
     print("\n🎉 All Tests Completed!")
     print("=" * 70)
-    print("✅ Conversations API - Working")
-    print("✅ Streaming (Fixed!) - Working") 
-    print("✅ Chat Completions API - Working")
-    print("✅ Async Support - Working")
-    print("✅ Error Handling - Working")
-    print("\n📦 SVECTOR Python SDK v1.1.2 is ready for production!")
-    print("🌐 Install: pip install svector-sdk==1.1.2")
-    print("📚 Docs: https://docs.svector.co.in")
+    print("Conversations API - Working")
+    print("Streaming (Fixed!) - Working") 
+    print("Chat Completions API - Working")
+    print("Async Support - Working")
+    print("Error Handling - Working")
+    print("\n SVECTOR Python SDK v1.1.2 is ready for production!")
+    print(" Install: pip install svector-sdk==1.1.2")
+    print(" Docs: https://platform.svector.co.in")
 
 if __name__ == "__main__":
     main()

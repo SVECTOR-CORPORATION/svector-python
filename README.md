@@ -7,7 +7,7 @@
 
 **Official Python SDK for accessing SVECTOR APIs.**
 
-SVECTOR is a technology-driven organization focused on AI, Mathematics, and Computational research, developing high-performance AI models, mathematical reasoning systems, and next-gen automation. This Python SDK provides convenient access to SVECTOR's powerful foundational AI models including **Spec-3**, **Spec-3-Turbo**, **Theta-35**, and **Theta-35-Mini**.
+SVECTOR develops high-performance AI models and automation solutions, specializing in artificial intelligence, mathematical computing, and computational research. This Python SDK provides programmatic access to SVECTOR's API services, offering intuitive model completions, document processing, and seamless integration with SVECTOR's advanced AI systems (e.g., Spec-3, Spec-3-Turbo, Theta-35).
 
 The library includes type hints for request parameters and response fields, and offers both synchronous and asynchronous clients powered by [httpx](https://github.com/encode/httpx) and [requests](https://github.com/psf/requests).
 
@@ -22,7 +22,7 @@ from svector import SVECTOR
 
 client = SVECTOR(api_key="your-api-key")  # or set SVECTOR_API_KEY env var
 
-# conversation API - just provide instructions and input!
+# Conversational API - just provide instructions and input!
 response = client.conversations.create(
     model="spec-3-turbo:latest",
     instructions="You are a helpful AI assistant that explains complex topics clearly.",
@@ -153,7 +153,7 @@ for event in stream:
 ```python
 # First upload a document
 with open("research-paper.pdf", "rb") as f:
-    file_response = client.files.create(f, purpose="rag")
+    file_response = client.files.create(f, purpose="default")
 
 # Then ask questions about it
 response = client.conversations.create(
@@ -265,12 +265,12 @@ from pathlib import Path
 
 # PDF document
 with open("document.pdf", "rb") as f:
-    pdf_file = client.files.create(f, purpose="rag")
+    pdf_file = client.files.create(f, purpose="default")
 
 # Text file from path
 file_response = client.files.create(
     Path("notes.txt"), 
-    purpose="rag"
+    purpose="default"
 )
 
 print(f"File uploaded: {file_response.file_id}")
@@ -284,7 +284,7 @@ with open("document.pdf", "rb") as f:
 
 file_response = client.files.create(
     data, 
-    purpose="rag", 
+    purpose="default", 
     filename="document.pdf"
 )
 ```
@@ -299,7 +299,7 @@ This document contains important findings...
 
 file_response = client.files.create(
     content.encode(), 
-    purpose="rag", 
+    purpose="default", 
     filename="notes.md"
 )
 ```
@@ -309,10 +309,10 @@ file_response = client.files.create(
 ```python
 # Upload documents
 with open("manual.pdf", "rb") as f:
-    doc1 = client.files.create(f, purpose="rag")
+    doc1 = client.files.create(f, purpose="default")
 
 with open("faq.docx", "rb") as f:
-    doc2 = client.files.create(f, purpose="rag")
+    doc2 = client.files.create(f, purpose="default")
 
 # Ask questions about the documents
 answer = client.conversations.create(
@@ -652,7 +652,7 @@ class DocumentAnalyzer:
             with open(file_path, "rb") as f:
                 file_response = self.client.files.create(
                     f, 
-                    purpose="rag",
+                    purpose="default",
                     filename=Path(file_path).name
                 )
             
@@ -666,7 +666,7 @@ class DocumentAnalyzer:
     def add_document_from_text(self, content: str, filename: str) -> str:
         file_response = self.client.files.create(
             content.encode(), 
-            purpose="rag", 
+            purpose="default", 
             filename=filename
         )
         self.uploaded_files.append(file_response.file_id)
@@ -852,7 +852,7 @@ model = "theta-35-mini:latest"
 ```python
 # Upload once, use multiple times
 with open("document.pdf", "rb") as f:
-    file_response = client.files.create(f, purpose="rag")
+    file_response = client.files.create(f, purpose="default")
     file_id = file_response.file_id
 
 # Use in multiple conversations
@@ -925,7 +925,7 @@ MIT License - see [LICENSE](LICENSE) file for details.
 ## Links & Support
 
 - **Website**: [https://www.svector.co.in](https://www.svector.co.in)
-- **Documentation**: [https://docs.svector.co.in](https://docs.svector.co.in)
+- **Documentation**: [https://platform.svector.co.in](https://platform.svector.co.in)
 - **Issues**: [GitHub Issues](https://github.com/SVECTOR-CORPORATION/svector-python/issues)
 - **Support**: [support@svector.co.in](mailto:support@svector.co.in)
 - **PyPI Package**: [svector-sdk](https://pypi.org/project/svector-sdk/)

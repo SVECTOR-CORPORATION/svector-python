@@ -9,7 +9,7 @@ import os
 from svector import SVECTOR
 
 # Set up the client
-api_key = os.getenv('SVECTOR_API_KEY', 'sk-c3f0aced443d41abbea4728a5f4c10de')
+api_key = os.getenv('SVECTOR_API_KEY', 'sk-your-api-key-here')
 client = SVECTOR(api_key=api_key)
 
 def example_basic_chat():
@@ -38,7 +38,7 @@ def example_basic_chat():
 
 def example_streaming():
     """Streaming example"""
-    print("🌊 Streaming Example")
+    print(" Streaming Example")
     print("-" * 50)
     
     try:
@@ -58,7 +58,7 @@ def example_streaming():
             if event.get("choices") and event["choices"][0].get("delta", {}).get("content"):
                 print(event["choices"][0]["delta"]["content"], end="", flush=True)
         
-        print("\n✅ Streaming completed!")
+        print("\nStreaming completed!")
         
     except Exception as e:
         print(f"Error: {e}")
@@ -83,7 +83,7 @@ def example_models():
 
 def example_conversation():
     """Multi-turn conversation example"""
-    print("💬 Multi-turn Conversation Example")
+    print("  Multi-turn Conversation Example")
     print("-" * 50)
     
     conversation = [
@@ -122,7 +122,7 @@ def example_conversation():
 
 def example_error_handling():
     """Error handling example"""
-    print("🛡️ Error Handling Example")
+    print(" Error Handling Example")
     print("-" * 50)
     
     # Test with invalid API key
@@ -132,10 +132,10 @@ def example_error_handling():
             model="spec-3-turbo:latest",
             messages=[{"role": "user", "content": "This should fail"}]
         )
-        print("❌ Should have failed with invalid API key")
+        print("Should have failed with invalid API key")
         
     except Exception as e:
-        print("✅ Successfully caught authentication error:")
+        print("Successfully caught authentication error:")
         print(f"   Error type: {type(e).__name__}")
         print(f"   Message: {e}")
     
@@ -143,7 +143,7 @@ def example_error_handling():
 
 def main():
     """Run all examples"""
-    print("🚀 SVECTOR Python SDK Examples")
+    print("SVECTOR Python SDK Examples")
     print("=" * 60)
     print()
     
@@ -162,7 +162,7 @@ def main():
             print("\n⚠️ Interrupted by user")
             break
         except Exception as e:
-            print(f"❌ Example failed: {e}")
+            print(f"Example failed: {e}")
             print()
     
     print("🎉 Examples completed!")
