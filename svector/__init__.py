@@ -5,7 +5,7 @@ Official Python client for SVECTOR AI Models.
 Advanced conversational AI and language models with API.
 """
 
-__version__ = "1.1.6"
+__version__ = "1.1.7"
 __author__ = "SVECTOR Team"
 __email__ = "support@svector.co.in"
 __author__ = "SVECTOR Team"

@@ -93,7 +93,7 @@ def test_chat_completions():
 
 async def test_async():
     """Test async client"""
-    print("\n⚡ Testing Async Client")
+    print("\nTesting Async Client")
     print("-" * 50)
     
     try:

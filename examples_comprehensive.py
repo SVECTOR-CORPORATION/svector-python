@@ -227,7 +227,7 @@ def error_handling_example():
 
 async def async_conversation_example():
     """Async conversation example"""
-    print("\n⚡ Async Conversation")
+    print("\nAsync Conversation")
     print("-" * 30)
     
     async with AsyncSVECTOR(api_key=os.environ.get("SVECTOR_API_KEY")) as client:
