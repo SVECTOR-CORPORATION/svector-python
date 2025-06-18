@@ -1,5 +1,5 @@
 """
-SVECTOR API Client - Enhanced with Sophisticated Conversations API
+SVECTOR API Client - Enhanced with Conversations API
 
 This client provides both traditional Chat Completions and the new Conversations API
 that offers a simplified interface with instructions and input parameters.
@@ -24,7 +24,7 @@ from .errors import (APIError, AuthenticationError, InternalServerError,
 
 class SVECTOR:
     """
-    SVECTOR API Client with Sophisticated Conversations API
+    SVECTOR API Client with Conversations API
     
     The primary interface for interacting with SVECTOR models is the Conversations API
     which provides a clean interface using instructions and input parameters.
@@ -32,7 +32,7 @@ class SVECTOR:
     Example:
         client = SVECTOR(api_key="your-api-key")
         
-        # Sophisticated Conversations API (Recommended)
+        # Conversations API (Recommended)
         response = client.conversations.create(
             model="spec-3-turbo:latest",
             instructions="You are a helpful assistant.",
@@ -81,7 +81,7 @@ class SVECTOR:
         })
         
         # Initialize API endpoints
-        self.conversations = ConversationsAPI(self)  # Sophisticated API
+        self.conversations = ConversationsAPI(self)  # API
         self.chat = ChatAPI(self)                    # Traditional API
         self.models = ModelsAPI(self)
         self.files = FilesAPI(self)

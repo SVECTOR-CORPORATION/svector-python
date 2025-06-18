@@ -2,10 +2,10 @@
 SVECTOR Python SDK
 
 Official Python client for SVECTOR AI Models.
-Advanced conversational AI and language models with sophisticated API.
+Advanced conversational AI and language models with API.
 """
 
-__version__ = "1.1.2"
+__version__ = "1.1.3"
 __author__ = "SVECTOR Team"
 __email__ = "support@svector.co.in"
 

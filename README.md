@@ -11,7 +11,7 @@ SVECTOR is a technology-driven organization focused on AI, Mathematics, and Comp
 
 The library includes type hints for request parameters and response fields, and offers both synchronous and asynchronous clients powered by [httpx](https://github.com/encode/httpx) and [requests](https://github.com/psf/requests).
 
-## 🚀 Quick Start
+## Quick Start
 
 ```bash
 pip install svector-sdk
@@ -22,7 +22,7 @@ from svector import SVECTOR
 
 client = SVECTOR(api_key="your-api-key")  # or set SVECTOR_API_KEY env var
 
-# Sophisticated conversation API - just provide instructions and input!
+# conversation API - just provide instructions and input!
 response = client.conversations.create(
     model="spec-3-turbo:latest",
     instructions="You are a helpful AI assistant that explains complex topics clearly.",
@@ -32,7 +32,7 @@ response = client.conversations.create(
 print(response.output)
 ```
 
-## 📚 Table of Contents
+## Table of Contents
 
 - [Installation](#installation)
 - [Authentication](#authentication)
@@ -49,7 +49,7 @@ print(response.output)
 - [Best Practices](#best-practices)
 - [Contributing](#contributing)
 
-## 📦 Installation
+## Installation
 
 ### pip
 ```bash
@@ -63,7 +63,7 @@ cd svector-python
 pip install -e ".[dev]"
 ```
 
-## 🔐 Authentication
+## Authentication
 
 Get your API key from the [SVECTOR Dashboard](https://www.svector.co.in) and set it as an environment variable:
 
@@ -79,21 +79,21 @@ from svector import SVECTOR
 client = SVECTOR(api_key="your-api-key-here")
 ```
 
-## ⭐ Core Features
+## Core Features
 
-- **🤖 Sophisticated Conversations API** - Simple instructions + input interface
-- **💬 Advanced Chat Completions** - Full control with role-based messages
-- **🌊 Real-time Streaming** - Server-sent events for live responses
-- **📁 File Processing** - Upload and process documents (PDF, DOCX, TXT, etc.)
-- **🧠 Knowledge Collections** - Organize files for enhanced RAG
-- **🔧 Type Safety** - Full type hints and IntelliSense support
-- **⚡ Async Support** - AsyncSVECTOR client for high-performance applications
-- **🛡️ Robust Error Handling** - Comprehensive error types and retry logic
-- **🌍 Multi-environment** - Works everywhere Python runs
+- **Conversations API** - Simple instructions + input interface
+- **Advanced Chat Completions** - Full control with role-based messages
+- **Real-time Streaming** - Server-sent events for live responses
+- **File Processing** - Upload and process documents (PDF, DOCX, TXT, etc.)
+- **Knowledge Collections** - Organize files for enhanced RAG
+- **Type Safety** - Full type hints and IntelliSense support
+- **Async Support** - AsyncSVECTOR client for high-performance applications
+- **Robust Error Handling** - Comprehensive error types and retry logic
+- **Multi-environment** - Works everywhere Python runs
 
-## 🎯 Conversations API (Recommended)
+## Conversations API (Recommended)
 
-The **Conversations API** provides a sophisticated, user-friendly interface. Just provide instructions and input - the SDK handles all the complex role management internally!
+The **Conversations API** provides a, user-friendly interface. Just provide instructions and input - the SDK handles all the complex role management internally!
 
 ### Basic Conversation
 
@@ -145,7 +145,7 @@ for event in stream:
     if not event.done:
         print(event.content, end="", flush=True)
     else:
-        print("\n✓ Story completed!")
+        print("\nStory completed!")
 ```
 
 ### Document-based Conversation
@@ -164,7 +164,7 @@ response = client.conversations.create(
 )
 ```
 
-## 🔧 Chat Completions API (Advanced)
+## Chat Completions API (Advanced)
 
 For full control over the conversation structure, use the Chat Completions API with role-based messages:
 
@@ -213,7 +213,7 @@ response = client.chat.create(
 )
 ```
 
-## 🌊 Streaming Responses
+## Streaming Responses
 
 Both Conversations and Chat APIs support real-time streaming:
 
@@ -231,7 +231,7 @@ for event in stream:
     if not event.done:
         print(event.content, end="", flush=True)
     else:
-        print("\n✓ Stream completed")
+        print("\nStream completed")
 ```
 
 ### Chat Streaming
@@ -254,7 +254,7 @@ for event in stream:
             print(content, end="", flush=True)
 ```
 
-## 📁 File Management & Document Processing
+## File Management & Document Processing
 
 Upload and process various file formats for enhanced AI capabilities:
 
@@ -326,7 +326,7 @@ answer = client.conversations.create(
 )
 ```
 
-## 🧠 Knowledge Collections
+## Knowledge Collections
 
 Organize multiple files into collections for better performance and context management:
 
@@ -344,7 +344,7 @@ response = client.conversations.create(
 )
 ```
 
-## 🤖 Models
+## Models
 
 SVECTOR provides several cutting-edge foundational AI models:
 
@@ -389,7 +389,7 @@ simple_task = client.conversations.create(
 )
 ```
 
-## 🛡️ Error Handling
+## Error Handling
 
 The SDK provides comprehensive error handling with specific error types:
 
@@ -413,18 +413,18 @@ try:
     
     print(response.output)
 except AuthenticationError as e:
-    print(f"❌ Invalid API key: {e}")
-    print("💡 Get your API key from https://www.svector.co.in")
+    print(f"Invalid API key: {e}")
+    print("Get your API key from https://www.svector.co.in")
 except RateLimitError as e:
-    print(f"⏰ Rate limit exceeded: {e}")
-    print("🔄 Please wait before making another request")
+    print(f"Rate limit exceeded: {e}")
+    print("Please wait before making another request")
 except NotFoundError as e:
-    print(f"🔍 Resource not found: {e}")
+    print(f"Resource not found: {e}")
 except APIError as e:
-    print(f"🚨 API error: {e} (Status: {e.status_code})")
-    print(f"📋 Request ID: {getattr(e, 'request_id', 'N/A')}")
+    print(f"API error: {e} (Status: {e.status_code})")
+    print(f"Request ID: {getattr(e, 'request_id', 'N/A')}")
 except Exception as e:
-    print(f"💥 Unexpected error: {e}")
+    print(f"Unexpected error: {e}")
 ```
 
 ### Available Error Types
@@ -438,7 +438,7 @@ except Exception as e:
 - **`APIConnectionError`** - Network connection issues
 - **`APIConnectionTimeoutError`** - Request timeout
 
-## ⚡ Async Support
+## Async Support
 
 The SDK provides full async support with `AsyncSVECTOR`:
 
@@ -500,14 +500,14 @@ async def concurrent_example():
         topics = ["artificial intelligence", "quantum computing", "blockchain"]
         for topic, response in zip(topics, responses):
             if isinstance(response, Exception):
-                print(f"❌ {topic}: Error - {response}")
+                print(f"{topic}: Error - {response}")
             else:
-                print(f"✅ {topic}: {response.output[:100]}...")
+                print(f"{topic}: {response.output[:100]}...")
 
 asyncio.run(concurrent_example())
 ```
 
-## ⚙️ Advanced Configuration
+## Advanced Configuration
 
 ### Client Configuration
 
@@ -567,7 +567,7 @@ print(f"Response: {response.output}")
 print(f"Request ID: {response.request_id}")
 ```
 
-## 💡 Complete Examples
+## Complete Examples
 
 ### Intelligent Chat Application
 
@@ -596,7 +596,7 @@ class IntelligentChat:
         return response.output
 
     def stream_chat(self, user_message: str):
-        print("🤖 Assistant: ", end="", flush=True)
+        print("Assistant: ", end="", flush=True)
         
         stream = self.client.conversations.create_stream(
             model="spec-3-turbo:latest",
@@ -657,10 +657,10 @@ class DocumentAnalyzer:
                 )
             
             self.uploaded_files.append(file_response.file_id)
-            print(f"✅ Uploaded: {file_path} (ID: {file_response.file_id})")
+            print(f"Uploaded: {file_path} (ID: {file_response.file_id})")
             return file_response.file_id
         except Exception as error:
-            print(f"❌ Failed to upload {file_path}: {error}")
+            print(f"Failed to upload {file_path}: {error}")
             raise error
 
     def add_document_from_text(self, content: str, filename: str) -> str:
@@ -720,19 +720,19 @@ summary = analyzer.analyze(
     "Provide a comprehensive summary of all documents",
     "summary"
 )
-print("📄 Summary:", summary)
+print("Summary:", summary)
 
 insights = analyzer.analyze(
     "What are the key business decisions and their potential impact?",
     "insights"
 )
-print("💡 Insights:", insights)
+print("Insights:", insights)
 
 # Compare documents
 comparison = analyzer.compare_documents(
     "financial performance and future projections"
 )
-print("🔍 Comparison:", comparison)
+print("Comparison:", comparison)
 ```
 
 ### Multi-Model Comparison
@@ -748,7 +748,7 @@ class ModelComparison:
     def compare_models(self, prompt: str):
         models = ["spec-3-turbo:latest", "spec-3:latest", "theta-35:latest", "theta-35-mini:latest"]
         
-        print(f"🔬 Comparing models for prompt: \"{prompt}\"\n")
+        print(f"Comparing models for prompt: \"{prompt}\"\n")
 
         results = []
         for model in models:
@@ -782,31 +782,31 @@ class ModelComparison:
         # Display results
         for result in results:
             if result["success"]:
-                print(f"📊 Model: {result['model']}")
-                print(f"⏱️  Duration: {result['duration']:.2f}s")
-                print(f"📈 Tokens: {result['usage'].get('total_tokens', 'N/A')}")
-                print(f"💬 Response: {result['response'][:200]}...")
+                print(f"Model: {result['model']}")
+                print(f"Duration: {result['duration']:.2f}s")
+                print(f"Tokens: {result['usage'].get('total_tokens', 'N/A')}")
+                print(f"Response: {result['response'][:200]}...")
                 print("─" * 80)
             else:
-                print(f"❌ {result['model']} failed: {result['error']}")
+                print(f"{result['model']} failed: {result['error']}")
 
 # Usage
 comparison = ModelComparison()
 comparison.compare_models("Explain the concept of artificial general intelligence")
 ```
 
-## 🎯 Best Practices
+## Best Practices
 
 ### 1. Use Conversations API for Simplicity
 ```python
-# ✅ Recommended: Clean and simple
+# Recommended: Clean and simple
 response = client.conversations.create(
     model="spec-3-turbo:latest",
     instructions="You are a helpful assistant.",
     input=user_message,
 )
 
-# ❌ More complex: Manual role management
+# More complex: Manual role management
 response = client.chat.create(
     model="spec-3-turbo:latest",
     messages=[
@@ -850,7 +850,7 @@ model = "theta-35-mini:latest"
 
 ### 4. Optimize File Usage
 ```python
-# ✅ Upload once, use multiple times
+# Upload once, use multiple times
 with open("document.pdf", "rb") as f:
     file_response = client.files.create(f, purpose="rag")
     file_id = file_response.file_id
@@ -870,20 +870,20 @@ for question in questions:
 import os
 from svector import SVECTOR
 
-# ✅ Use environment variables
+# Use environment variables
 client = SVECTOR(api_key=os.environ.get("SVECTOR_API_KEY"))
 
-# ❌ Don't hardcode API keys
+# Don't hardcode API keys
 client = SVECTOR(api_key="sk-hardcoded-key-here")  # Never do this!
 ```
 
 ### 6. Use Context Managers for Async
 ```python
-# ✅ Recommended: Use context manager
+# Recommended: Use context manager
 async with AsyncSVECTOR() as client:
     response = await client.conversations.create(...)
 
-# ❌ Manual cleanup required
+# Manual cleanup required
 client = AsyncSVECTOR()
 try:
     response = await client.conversations.create(...)
@@ -891,7 +891,7 @@ finally:
     await client.close()
 ```
 
-## 🧪 Testing
+## Testing
 
 Run tests with pytest:
 
@@ -906,7 +906,7 @@ pytest
 pytest --cov=svector
 ```
 
-## 🤝 Contributing
+## Contributing
 
 We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) for details.
 
@@ -918,17 +918,17 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
 6. Run tests and linting
 7. Submit a pull request
 
-## 📄 License
+## License
 
 MIT License - see [LICENSE](LICENSE) file for details.
 
-## 🔗 Links & Support
+## Links & Support
 
-- **🌐 Website**: [https://www.svector.co.in](https://www.svector.co.in)
-- **📚 Documentation**: [https://docs.svector.co.in](https://docs.svector.co.in)
-- **🐛 Issues**: [GitHub Issues](https://github.com/SVECTOR-CORPORATION/svector-python/issues)
-- **💬 Support**: [support@svector.co.in](mailto:support@svector.co.in)
-- **📦 PyPI Package**: [svector-sdk](https://pypi.org/project/svector-sdk/)
+- **Website**: [https://www.svector.co.in](https://www.svector.co.in)
+- **Documentation**: [https://docs.svector.co.in](https://docs.svector.co.in)
+- **Issues**: [GitHub Issues](https://github.com/SVECTOR-CORPORATION/svector-python/issues)
+- **Support**: [support@svector.co.in](mailto:support@svector.co.in)
+- **PyPI Package**: [svector-sdk](https://pypi.org/project/svector-sdk/)
 
 ---
 

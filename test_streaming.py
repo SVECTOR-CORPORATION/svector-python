@@ -7,7 +7,9 @@ after the fix for the duplicate parameter issue.
 """
 
 import os
+
 from svector import SVECTOR
+
 
 def test_streaming():
     """Test that streaming works without parameter conflicts"""

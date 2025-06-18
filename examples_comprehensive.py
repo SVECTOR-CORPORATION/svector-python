@@ -1,7 +1,7 @@
 """
 SVECTOR Python SDK - Comprehensive Examples
 
-This file demonstrates the sophisticated Conversations API and advanced features.
+This file demonstrates the Conversations API and advanced features.
 """
 
 import asyncio
@@ -13,8 +13,8 @@ from svector import SVECTOR, AsyncSVECTOR
 
 
 def basic_conversation_example():
-    """Basic conversation using the sophisticated API"""
-    print("🚀 SVECTOR Python SDK - Sophisticated Conversations API")
+    """Basic conversation using the API"""
+    print("🚀 SVECTOR Python SDK - Conversations API")
     print("=" * 60)
     
     # Initialize client

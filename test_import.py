@@ -82,7 +82,7 @@ from svector import SVECTOR
 
 client = SVECTOR(api_key="your-api-key")
 
-# Sophisticated conversation
+# Conversation
 response = client.conversations.create(
     model="spec-3-turbo:latest",
     instructions="You are a helpful assistant.",
@@ -92,6 +92,6 @@ response = client.conversations.create(
 print(response.output)
 """)
 print("=" * 60)
-print("📚 Documentation: https://docs.svector.co.in")
+print("📚 Documentation: https://platform.svector.co.in")
 print("💬 Support: support@svector.co.in")
 print("🌐 Website: https://www.svector.co.in")

@@ -57,7 +57,7 @@ class ConversationStreamEvent:
 
 class ConversationsAPI:
     """
-    Sophisticated Conversations API
+    Conversations API
     
     Provides a clean interface for AI conversations using instructions and input,
     automatically handling system role conversion internally.
@@ -102,7 +102,7 @@ class ConversationsAPI:
             )
             print(response.output)
         """
-        # Convert sophisticated interface to internal chat format
+        # Convert interface to internal chat format
         messages = self._build_messages(instructions, input, context)
         
         # Prepare chat request
@@ -121,7 +121,7 @@ class ConversationsAPI:
         # Make request using internal chat API
         response = self.client.chat.create(**chat_data)
         
-        # Convert to sophisticated format
+        # Convert to format
         output = ""
         if response.get("choices") and len(response["choices"]) > 0:
             output = response["choices"][0]["message"]["content"]
@@ -193,7 +193,7 @@ class ConversationsAPI:
         
         # Stream using internal chat API
         for event in self.client.chat.create_stream(**chat_data):
-            # Transform internal events to sophisticated format
+            # Transform internal events to format
             content = ""
             done = False
             
@@ -251,7 +251,7 @@ class ConversationsAPI:
         context: Optional[List[str]] = None
     ) -> List[Dict[str, str]]:
         """
-        Build messages array from sophisticated conversation parameters.
+        Build messages array from conversation parameters.
         
         Converts instructions + input + context to proper role-based messages.
         """

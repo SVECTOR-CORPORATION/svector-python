@@ -5,13 +5,15 @@ SVECTOR Python SDK v1.1.2 - Final Comprehensive Test
 This test showcases all the major features and confirms everything is working.
 """
 
-import os
 import asyncio
+import os
+
 from svector import SVECTOR, AsyncSVECTOR
 
-def test_sophisticated_conversations():
-    """Test the sophisticated conversations API"""
-    print("🎯 Testing Sophisticated Conversations API")
+
+def test_conversations():
+    """Test the conversations API"""
+    print("🎯 Testing Conversations API")
     print("-" * 50)
     
     client = SVECTOR(api_key=os.environ.get("SVECTOR_API_KEY", "test-key"))
@@ -112,7 +114,7 @@ def test_error_handling():
     print("\n🛡️ Testing Error Handling")
     print("-" * 50)
     
-    from svector import AuthenticationError, APIError
+    from svector import APIError, AuthenticationError
     
     client = SVECTOR(api_key="invalid-key")
     
@@ -134,7 +136,7 @@ def main():
     print("🚀 SVECTOR Python SDK v1.1.2 - Comprehensive Test Suite")
     print("=" * 70)
     
-    test_sophisticated_conversations()
+    test_conversations()
     test_streaming()
     test_chat_completions()
     
@@ -148,7 +150,7 @@ def main():
     
     print("\n🎉 All Tests Completed!")
     print("=" * 70)
-    print("✅ Sophisticated Conversations API - Working")
+    print("✅ Conversations API - Working")
     print("✅ Streaming (Fixed!) - Working") 
     print("✅ Chat Completions API - Working")
     print("✅ Async Support - Working")

@@ -1,29 +1,30 @@
 """
-SVECTOR API Client - Enhanced with Sophisticated Conversations API
+SVECTOR API Client - Enhanced with Conversations API
 
 This client provides both traditional Chat Completions and the new Conversations API
 that offers a simplified interface with instructions and input parameters.
 """
 
-import json
-import time
-import os
 import asyncio
-from typing import Any, BinaryIO, Dict, Iterator, List, Optional, Union, AsyncIterator
+import json
+import os
+import time
 from pathlib import Path
+from typing import (Any, AsyncIterator, BinaryIO, Dict, Iterator, List,
+                    Optional, Union)
 
-import requests
 import aiohttp
+import requests
 
+from .conversations import AsyncConversationsAPI, ConversationsAPI
 from .errors import (APIError, AuthenticationError, NotFoundError,
                      PermissionDeniedError, RateLimitError, SVectorError,
                      UnprocessableEntityError)
-from .conversations import ConversationsAPI, AsyncConversationsAPI
 
 
 class SVECTOR:
     """
-    SVECTOR API Client with Sophisticated Conversations API
+    SVECTOR API Client with Conversations API
     
     The primary interface for interacting with SVECTOR models is the Conversations API
     which provides a clean interface using instructions and input parameters.
@@ -31,7 +32,7 @@ class SVECTOR:
     Example:
         client = SVECTOR(api_key="your-api-key")
         
-        # Sophisticated Conversations API (Recommended)
+        # Conversations API (Recommended)
         response = client.conversations.create(
             model="spec-3-turbo:latest",
             instructions="You are a helpful assistant.",
@@ -80,7 +81,7 @@ class SVECTOR:
         })
         
         # Initialize API endpoints
-        self.conversations = ConversationsAPI(self)  # Sophisticated API
+        self.conversations = ConversationsAPI(self)  # API
         self.chat = ChatAPI(self)                    # Traditional API
         self.models = ModelsAPI(self)
         self.files = FilesAPI(self)
