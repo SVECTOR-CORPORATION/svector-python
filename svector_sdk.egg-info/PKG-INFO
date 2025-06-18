@@ -1,6 +1,6 @@
 Metadata-Version: 2.4
 Name: svector-sdk
-Version: 1.0.5
+Version: 1.0.6
 Summary: Official Python SDK for SVECTOR AI Models - Advanced conversational AI and language models
 Home-page: https://github.com/svector-corporation/svector-python
 Author: SVECTOR Team
@@ -8,11 +8,11 @@ Author-email: SVECTOR Team <support@svector.co.in>
 Maintainer-email: SVECTOR Team <support@svector.co.in>
 License: MIT
 Project-URL: Homepage, https://www.svector.co.in
-Project-URL: Documentation, https://www.svector.co.in/docs
+Project-URL: Documentation, https://platform.svector.co.in
 Project-URL: Repository, https://github.com/svector-corporation/svector-python
 Project-URL: Bug Tracker, https://github.com/svector-corporation/svector-python/issues
 Project-URL: Changelog, https://github.com/svector-corporation/svector-python/blob/main/CHANGELOG.md
-Keywords: svector,ai,machine-learning,api,llm,chatbot,artificial-intelligence,conversational-ai,language-models
+Keywords: svector,ai,machine-learning,api,llm,spec-chat,artificial-intelligence,conversational-ai,language-models
 Classifier: Development Status :: 5 - Production/Stable
 Classifier: Intended Audience :: Developers
 Classifier: License :: OSI Approved :: MIT License
@@ -46,16 +46,20 @@ Dynamic: requires-python
 
 # SVECTOR Python SDK
 
-[![PyPI version](https://badge.fury.io/py/svector.svg)](https://badge.fury.io/py/svector)
-[![Python Support](https://img.shields.io/pypi/pyversions/svector.svg)](https://pypi.org/project/svector/)
+[![PyPI version](https://badge.fury.io/py/svector-sdk.svg)](https://badge.fury.io/py/svector-sdk)
+[![Python Support](https://img.shields.io/pypi/pyversions/svector-sdk.svg)](https://pypi.org/project/svector-sdk/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-The official Python SDK for **SVECTOR AI Models**. Build powerful AI applications with advanced conversational AI and language models.
+The official Python SDK for **SVECTOR's AI models**. 
+
+**SVECTOR** is a technology-driven organization focused on AI, Mathematics, and Computational research, developing cutting-edge language models including **Spec-3**, **Spec-3-Turbo**, **Spec-3.5**, **Theta-35**, and **Theta-35-Mini**.
+
+This SDK provides programmatic access to SVECTOR's proprietary AI models for building intelligent applications, while our **Spec Chat** web interface at [spec-chat.tech](https://spec-chat.tech) offers live model interaction.
 
 ## Installation
 
 ```bash
-pip install svector
+pip install svector-sdk
 ```
 
 ## Quick Start
@@ -65,10 +69,10 @@ pip install svector
 ```python
 from svector import SVECTOR
 
-# Initialize the client
+# Initialize with your SVECTOR API key
 client = SVECTOR(api_key="your-api-key-here")
 
-# Simple chat completion
+# Use SVECTOR's models
 response = client.chat.create(
     model="spec-3-turbo:latest",
     messages=[
@@ -277,7 +281,7 @@ except APIError as e:
 
 ## 🔑 Authentication
 
-Get your API key from the [SVECTOR Dashboard](https://www.svector.co.in/dashboard).
+Get your API key from the [SVECTOR Dashboard](https://platform.svector.co.in).
 
 Set it as an environment variable:
 
@@ -291,16 +295,45 @@ Or pass it directly to the client:
 client = SVECTOR(api_key="your-api-key-here")
 ```
 
-## Supported Models
+## SVECTOR's AI Models
 
-- `spec-3-turbo:latest` - General purpose model with excellent performance
-- `spec-3-pro:latest` - Advanced reasoning model for complex tasks
+SVECTOR develops cutting-edge language models designed for scalable, intelligent solutions:
 
-Get the latest list:
+### Available Models:
+- **`spec-3-turbo:latest`** - High-performance general-purpose model with optimized speed and accuracy
+- **`spec-3:latest`** - Advanced reasoning model for complex computational tasks  
+- **`spec-3.5:latest`** - Next-generation model with enhanced capabilities (coming soon)
+- **`theta-35:latest`** - Large-scale model for enterprise applications and complex reasoning
+- **`theta-35-mini:latest`** - Efficient model optimized for speed and resource efficiency
 
+### Model Selection:
 ```python
+# List all available SVECTOR models
 models = client.models.list()
+print(models["data"])
+
+# Use different models for different tasks
+response = client.chat.create(
+    model="spec-3-turbo:latest",  # Fast and efficient
+    messages=[{"role": "user", "content": "Quick question"}]
+)
+
+response = client.chat.create(
+    model="theta-35:latest",      # Advanced reasoning
+    messages=[{"role": "user", "content": "Complex analysis task"}]
+)
 ```
+
+## SVECTOR Technology Platform
+
+**SVECTOR** is a technology company focused on AI, Mathematics, and Computational research. We develop:
+
+- **AI Models**: Spec-3, Spec-3-Turbo, Spec-3.5, Theta-35, Theta-35-Mini and more proprietary models
+- **Mathematical Reasoning Systems**: Advanced computational frameworks for scientific computing
+- **Next-Gen Automation**: Scalable intelligent solutions from quantum AI to enterprise automation
+- **Spec Chat**: Live web interface for model interaction at [spec-chat.tech](https://spec-chat.tech)
+
+This Python SDK provides programmatic access to SVECTOR's models for developers building AI-powered applications and integrations.
 
 ## Requirements
 
@@ -309,7 +342,7 @@ models = client.models.list()
 
 ## 🤝 Support
 
-- **Documentation**: [https://www.svector.co.in/docs](https://www.svector.co.in/docs)
+- **Documentation**: [https://platform.svector.co.in](https://platform.svector.co.in)
 - **Email**: support@svector.co.in
 - **Issues**: [GitHub Issues](https://github.com/svector-corporation/svector-python/issues)
 
@@ -324,7 +357,7 @@ This project is licensed under the MIT License. See the [LICENSE](LICENSE) file 
    pip install svector
    ```
 
-2. **Get your API key**: Visit [https://www.svector.co.in](https://www.svector.co.in)
+2. **Get your API key**: Visit [https://platform.svector.co.in](https://platform.svector.co.in)
 
 3. **Start building**:
    ```python

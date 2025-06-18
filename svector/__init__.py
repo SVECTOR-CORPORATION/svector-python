@@ -1,5 +1,5 @@
 """
-SVE__version__ = "1.0.5"TOR Python SDK
+SVE__version__ = "1.0.6"TOR Python SDK
 
 Official Python client for SVECTOR AI Models.
 Advanced conversational AI and language models.

@@ -5,16 +5,16 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="svector-sdk",
-    version="1.0.5",
+    version="1.0.6",
     author="SVECTOR Team",
     author_email="support@svector.co.in",
-    description="Official Python SDK for SVECTOR's foundational AI models - Spec-3, Theta-35, and advanced reasoning systems",
+    description="Official Python SDK for SVECTOR's AI models - Spec-3, Theta-35, and advanced reasoning systems",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/svector-corporation/svector-python",
     project_urls={
         "Bug Tracker": "https://github.com/svector-corporation/svector-python/issues",
-        "Documentation": "https://www.svector.co.in/docs",
+        "Documentation": "https://platform.svector.co.in",
         "Homepage": "https://www.svector.co.in",
     },
     packages=find_packages(),
