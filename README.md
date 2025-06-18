@@ -1,15 +1,17 @@
 # SVECTOR Python SDK
 
-[![PyPI version](https://badge.fury.io/py/svector.svg)](https://badge.fury.io/py/svector)
-[![Python Support](https://img.shields.io/pypi/pyversions/svector.svg)](https://pypi.org/project/svector/)
+[![PyPI version](https://badge.fury.io/py/svector-sdk.svg)](https://badge.fury.io/py/svector-sdk)
+[![Python Support](https://img.shields.io/pypi/pyversions/svector-sdk.svg)](https://pypi.org/project/svector-sdk/)
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)
 
-The official Python SDK for **SVECTOR AI Models**. Build powerful AI applications with advanced conversational AI and language models.
+The official Python SDK for **SVECTOR's AI models**. SVECTOR is a technology-driven organization focused on AI, Mathematics, and Computational research, developing high-performance AI models including Spec-3, Spec-3-Turbo, Theta-35, and Theta-35-Mini.
+
+Build powerful applications with SVECTOR's next-generation language models through our comprehensive Python SDK.
 
 ## Installation
 
 ```bash
-pip install svector
+pip install svector-sdk
 ```
 
 ## Quick Start
@@ -19,10 +21,10 @@ pip install svector
 ```python
 from svector import SVECTOR
 
-# Initialize the client
+# Initialize with your SVECTOR API key
 client = SVECTOR(api_key="your-api-key-here")
 
-# Simple chat completion
+# Use SVECTOR's models
 response = client.chat.create(
     model="spec-3-turbo:latest",
     messages=[
@@ -245,16 +247,44 @@ Or pass it directly to the client:
 client = SVECTOR(api_key="your-api-key-here")
 ```
 
-## Supported Models
+## SVECTOR's AI Models
 
-- `spec-3-turbo:latest` - General purpose model with excellent performance
-- `spec-3-pro:latest` - Advanced reasoning model for complex tasks
+SVECTOR develops cutting-edge language models designed for scalable, intelligent solutions:
 
-Get the latest list:
+### Available Models:
+- **`spec-3-turbo:latest`** - High-performance general-purpose model with optimized speed and accuracy
+- **`spec-3:latest`** - Advanced reasoning model for complex computational tasks  
+- **`theta-35:latest`** - Large-scale model for enterprise applications and complex reasoning
+- **`theta-35-mini:latest`** - Efficient model optimized for speed and resource efficiency
 
+### Model Selection:
 ```python
+# List all available SVECTOR models
 models = client.models.list()
+print(models["data"])
+
+# Use different models for different tasks
+response = client.chat.create(
+    model="spec-3-turbo:latest",  # Fast and efficient
+    messages=[{"role": "user", "content": "Quick question"}]
+)
+
+response = client.chat.create(
+    model="theta-35:latest",      # Advanced reasoning
+    messages=[{"role": "user", "content": "Complex analysis task"}]
+)
 ```
+
+## SVECTOR Technology Platform
+
+**SVECTOR** is a technology-driven organization focused on AI, Mathematics, and Computational research. We develop:
+
+- * AI Models**: Spec-3, Spec-3-Turbo, Theta-35 series and more
+- **Mathematical Reasoning Systems**: Advanced computational frameworks
+- **Next-Gen Automation**: Scalable intelligent solutions
+- **Spec Chat**: Web interface for live model interaction at [spec-chat.tech](https://spec-chat.tech)
+
+This Python SDK provides programmatic access to SVECTOR's models for building AI-powered applications.
 
 ## Requirements
 

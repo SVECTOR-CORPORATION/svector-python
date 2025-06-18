@@ -8,7 +8,7 @@ setup(
     version="1.0.5",
     author="SVECTOR Team",
     author_email="support@svector.co.in",
-    description="Official Python SDK for SVECTOR AI Models - Advanced conversational AI and language models",
+    description="Official Python SDK for SVECTOR's foundational AI models - Spec-3, Theta-35, and advanced reasoning systems",
     long_description=long_description,
     long_description_content_type="text/markdown",
     url="https://github.com/svector-corporation/svector-python",
