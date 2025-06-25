@@ -920,7 +920,7 @@ We welcome contributions! Please see our [Contributing Guide](CONTRIBUTING.md) f
 
 ## License
 
-MIT License - see [LICENSE](LICENSE) file for details.
+Apache License - see [LICENSE](LICENSE) file for details.
 
 ## Links & Support
 
