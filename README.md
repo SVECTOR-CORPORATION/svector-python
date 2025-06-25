@@ -24,7 +24,7 @@ client = SVECTOR(api_key="your-api-key")  # or set SVECTOR_API_KEY env var
 
 # Conversational API - just provide instructions and input!
 response = client.conversations.create(
-    model="spec-3-turbo:latest",
+    model="spec-3-turbo",
     instructions="You are a helpful AI assistant that explains complex topics clearly.",
     input="What is artificial intelligence?",
 )
@@ -103,7 +103,7 @@ from svector import SVECTOR
 client = SVECTOR()
 
 response = client.conversations.create(
-    model="spec-3-turbo:latest",
+    model="spec-3-turbo",
     instructions="You are a helpful assistant that explains things clearly.",
     input="What is machine learning?",
     temperature=0.7,
@@ -119,7 +119,7 @@ print(f"Token Usage: {response.usage}")
 
 ```python
 response = client.conversations.create(
-    model="spec-3-turbo:latest",
+    model="spec-3-turbo",
     instructions="You are a programming tutor that helps students learn coding.",
     input="Can you show me an example?",
     context=[
@@ -134,7 +134,7 @@ response = client.conversations.create(
 
 ```python
 stream = client.conversations.create_stream(
-    model="spec-3-turbo:latest",
+    model="spec-3-turbo",
     instructions="You are a creative storyteller.",
     input="Tell me a short story about robots and humans.",
     stream=True,
@@ -157,7 +157,7 @@ with open("research-paper.pdf", "rb") as f:
 
 # Then ask questions about it
 response = client.conversations.create(
-    model="spec-3-turbo:latest",
+    model="spec-3-turbo",
     instructions="You are a research assistant that analyzes documents.",
     input="What are the key findings in this paper?",
     files=[{"type": "file", "id": file_response.file_id}],
@@ -172,7 +172,7 @@ For full control over the conversation structure, use the Chat Completions API w
 
 ```python
 response = client.chat.create(
-    model="spec-3-turbo:latest",
+    model="spec-3-turbo",
     messages=[
         {"role": "system", "content": "You are a helpful assistant."},
         {"role": "user", "content": "Hello, how are you?"}
@@ -195,7 +195,7 @@ conversation = [
 ]
 
 response = client.chat.create(
-    model="spec-3-turbo:latest",
+    model="spec-3-turbo",
     messages=conversation,
     temperature=0.5,
 )
@@ -205,7 +205,7 @@ response = client.chat.create(
 
 ```python
 response = client.chat.create(
-    model="spec-3-turbo:latest",
+    model="spec-3-turbo",
     messages=[
         {"role": "developer", "content": "You are an expert code reviewer. Provide detailed feedback."},
         {"role": "user", "content": "Please review this Python code: def add(a, b): return a + b"}
@@ -221,7 +221,7 @@ Both Conversations and Chat APIs support real-time streaming:
 
 ```python
 stream = client.conversations.create_stream(
-    model="spec-3-turbo:latest",
+    model="spec-3-turbo",
     instructions="You are a creative writer.",
     input="Write a poem about technology.",
     stream=True,
@@ -238,7 +238,7 @@ for event in stream:
 
 ```python
 stream = client.chat.create_stream(
-    model="spec-3-turbo:latest",
+    model="spec-3-turbo",
     messages=[
         {"role": "system", "content": "You are a helpful assistant."},
         {"role": "user", "content": "Explain quantum computing"}
@@ -316,7 +316,7 @@ with open("faq.docx", "rb") as f:
 
 # Ask questions about the documents
 answer = client.conversations.create(
-    model="spec-3-turbo:latest",
+    model="spec-3-turbo",
     instructions="You are a helpful assistant that answers questions based on the provided documents.",
     input="What are the key features mentioned in the manual?",
     files=[
@@ -337,7 +337,7 @@ result2 = client.knowledge.add_file("collection-123", "file-789")
 
 # Use the entire collection in conversations
 response = client.conversations.create(
-    model="spec-3-turbo:latest",
+    model="spec-3-turbo",
     instructions="You are a research assistant with access to our knowledge base.",
     input="Summarize all the information about our products.",
     files=[{"type": "collection", "id": "collection-123"}],
@@ -358,24 +358,24 @@ print(models["models"])
 
 **SVECTOR's Foundational Models:**
 
-- **`spec-3-turbo:latest`** - Fast, efficient model for most use cases
-- **`spec-3:latest`** - Standard model with balanced performance  
-- **`theta-35-mini:latest`** - Lightweight model for simple tasks
-- **`theta-35:latest`** - Advanced model for complex reasoning
+- **`spec-3-turbo`** - Fast, efficient model for most use cases
+- **`spec-3`** - Standard model with balanced performance  
+- **`theta-35-mini`** - Lightweight model for simple tasks
+- **`theta-35`** - Advanced model for complex reasoning
 
 ### Model Selection Guide
 
 ```python
 # For quick responses and general tasks
 quick_response = client.conversations.create(
-    model="spec-3-turbo:latest",
+    model="spec-3-turbo",
     instructions="You are a helpful assistant.",
     input="What time is it?",
 )
 
 # For complex reasoning and analysis
 complex_analysis = client.conversations.create(
-    model="theta-35:latest",
+    model="theta-35",
     instructions="You are an expert data analyst.",
     input="Analyze the trends in this quarterly report.",
     files=[{"type": "file", "id": "report-file-id"}],
@@ -383,7 +383,7 @@ complex_analysis = client.conversations.create(
 
 # For lightweight tasks
 simple_task = client.conversations.create(
-    model="theta-35-mini:latest",
+    model="theta-35-mini",
     instructions="You help with simple questions.",
     input="What is 2 + 2?",
 )
@@ -406,7 +406,7 @@ client = SVECTOR()
 
 try:
     response = client.conversations.create(
-        model="spec-3-turbo:latest",
+        model="spec-3-turbo",
         instructions="You are a helpful assistant.",
         input="Hello world",
     )
@@ -451,7 +451,7 @@ from svector import AsyncSVECTOR
 async def main():
     async with AsyncSVECTOR() as client:
         response = await client.conversations.create(
-            model="spec-3-turbo:latest",
+            model="spec-3-turbo",
             instructions="You are a helpful assistant.",
             input="Explain quantum computing in simple terms.",
         )
@@ -466,7 +466,7 @@ asyncio.run(main())
 async def streaming_example():
     async with AsyncSVECTOR() as client:
         stream = await client.conversations.create_stream(
-            model="spec-3-turbo:latest",
+            model="spec-3-turbo",
             instructions="You are a creative storyteller.",
             input="Write a poem about technology.",
             stream=True,
@@ -488,7 +488,7 @@ async def concurrent_example():
         # Multiple async conversations
         tasks = [
             client.conversations.create(
-                model="spec-3-turbo:latest",
+                model="spec-3-turbo",
                 instructions="You are a helpful assistant.",
                 input=f"What is {topic}?"
             )
@@ -540,7 +540,7 @@ client = AsyncSVECTOR(
 
 ```python
 response = client.conversations.create(
-    model="spec-3-turbo:latest",
+    model="spec-3-turbo",
     instructions="You are a helpful assistant.",
     input="Hello",
     timeout=60,           # Override timeout for this request
@@ -556,7 +556,7 @@ response = client.conversations.create(
 ```python
 # Get both response data and raw HTTP response
 response, raw = client.conversations.create_with_response(
-    model="spec-3-turbo:latest",
+    model="spec-3-turbo",
     instructions="You are a helpful assistant.",
     input="Hello",
 )
@@ -584,7 +584,7 @@ class IntelligentChat:
         self.conversation_history.append(user_message)
 
         response = self.client.conversations.create(
-            model="spec-3-turbo:latest",
+            model="spec-3-turbo",
             instructions=system_instructions or "You are a helpful and friendly AI assistant.",
             input=user_message,
             context=self.conversation_history[-10:],  # Keep last 10 messages
@@ -599,7 +599,7 @@ class IntelligentChat:
         print("Assistant: ", end="", flush=True)
         
         stream = self.client.conversations.create_stream(
-            model="spec-3-turbo:latest",
+            model="spec-3-turbo",
             instructions="You are a helpful AI assistant. Be conversational and engaging.",
             input=user_message,
             context=self.conversation_history[-6:],
@@ -680,7 +680,7 @@ class DocumentAnalyzer:
         }
 
         response = self.client.conversations.create(
-            model="spec-3-turbo:latest",
+            model="spec-3-turbo",
             instructions=instructions[analysis_type],
             input=query,
             files=[{"type": "file", "id": file_id} for file_id in self.uploaded_files],
@@ -746,7 +746,7 @@ class ModelComparison:
         self.client = SVECTOR()
 
     def compare_models(self, prompt: str):
-        models = ["spec-3-turbo:latest", "spec-3:latest", "theta-35:latest", "theta-35-mini:latest"]
+        models = ["spec-3-turbo", "spec-3", "theta-35", "theta-35-mini"]
         
         print(f"Comparing models for prompt: \"{prompt}\"\n")
 
@@ -801,14 +801,14 @@ comparison.compare_models("Explain the concept of artificial general intelligenc
 ```python
 # Recommended: Clean and simple
 response = client.conversations.create(
-    model="spec-3-turbo:latest",
+    model="spec-3-turbo",
     instructions="You are a helpful assistant.",
     input=user_message,
 )
 
 # More complex: Manual role management
 response = client.chat.create(
-    model="spec-3-turbo:latest",
+    model="spec-3-turbo",
     messages=[
         {"role": "system", "content": "You are a helpful assistant."},
         {"role": "user", "content": user_message}
@@ -824,7 +824,7 @@ def chat_with_retry(client, prompt, max_retries=3):
     for attempt in range(max_retries):
         try:
             return client.conversations.create(
-                model="spec-3-turbo:latest",
+                model="spec-3-turbo",
                 instructions="You are helpful.",
                 input=prompt
             )
@@ -839,13 +839,13 @@ def chat_with_retry(client, prompt, max_retries=3):
 ### 3. Use Appropriate Models
 ```python
 # For quick responses
-model = "spec-3-turbo:latest"
+model = "spec-3-turbo"
 
 # For complex reasoning
-model = "theta-35:latest"
+model = "theta-35"
 
 # For simple tasks
-model = "theta-35-mini:latest"
+model = "theta-35-mini"
 ```
 
 ### 4. Optimize File Usage
@@ -858,7 +858,7 @@ with open("document.pdf", "rb") as f:
 # Use in multiple conversations
 for question in questions:
     response = client.conversations.create(
-        model="spec-3-turbo:latest",
+        model="spec-3-turbo",
         instructions="You are a document analyst.",
         input=question,
         files=[{"type": "file", "id": file_id}],

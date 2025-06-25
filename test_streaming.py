@@ -24,7 +24,7 @@ def test_streaming():
         print("Streaming Answer: ", end="", flush=True)
         
         stream = client.conversations.create_stream(
-            model="spec-3-turbo:latest",
+            model="spec-3-turbo",
             instructions="You are a comedian. Keep responses very short - 1-2 sentences max.",
             input="Tell me a very short joke about programming.",
             max_tokens=50,

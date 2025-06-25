@@ -34,7 +34,7 @@ class SVECTOR:
         
         # Conversations API (Recommended)
         response = client.conversations.create(
-            model="spec-3-turbo:latest",
+            model="spec-3-turbo",
             instructions="You are a helpful assistant.",
             input="What is machine learning?"
         )
@@ -42,7 +42,7 @@ class SVECTOR:
         
         # Traditional Chat Completions API (Advanced)
         response = client.chat.create(
-            model="spec-3-turbo:latest",
+            model="spec-3-turbo",
             messages=[
                 {"role": "system", "content": "You are a helpful assistant."},
                 {"role": "user", "content": "Hello!"}
@@ -216,7 +216,7 @@ class AsyncSVECTOR:
         async def main():
             client = AsyncSVECTOR(api_key="your-api-key")
             response = await client.conversations.create(
-                model="spec-3-turbo:latest",
+                model="spec-3-turbo",
                 instructions="You are a helpful assistant.",
                 input="Hello!"
             )
@@ -355,7 +355,7 @@ class ChatAPI:
         Create a chat completion using role-based messages
         
         Args:
-            model: Model name (e.g., "spec-3-turbo:latest")
+            model: Model name (e.g., "spec-3-turbo")
             messages: List of message dicts with 'role' and 'content'
             temperature: Sampling temperature (0.0 to 2.0)
             max_tokens: Maximum tokens to generate

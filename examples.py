@@ -19,7 +19,7 @@ def example_basic_chat():
     
     try:
         response = client.chat.create(
-            model="spec-3-turbo:latest",
+            model="spec-3-turbo",
             messages=[
                 {"role": "user", "content": "What is artificial intelligence?"}
             ],
@@ -46,7 +46,7 @@ def example_streaming():
         print("Streaming Answer: ", end="", flush=True)
         
         stream = client.chat.create(
-            model="spec-3-turbo:latest",
+            model="spec-3-turbo",
             messages=[
                 {"role": "user", "content": "Write a haiku about Python programming"}
             ],
@@ -103,7 +103,7 @@ def example_conversation():
             conversation.append({"role": "user", "content": question})
             
             response = client.chat.create(
-                model="spec-3-turbo:latest",
+                model="spec-3-turbo",
                 messages=conversation,
                 temperature=0.3,
                 max_tokens=100
@@ -129,7 +129,7 @@ def example_error_handling():
     try:
         invalid_client = SVECTOR(api_key="invalid-key")
         response = invalid_client.chat.create(
-            model="spec-3-turbo:latest",
+            model="spec-3-turbo",
             messages=[{"role": "user", "content": "This should fail"}]
         )
         print("Should have failed with invalid API key")

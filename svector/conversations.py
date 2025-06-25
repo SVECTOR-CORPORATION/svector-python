@@ -81,7 +81,7 @@ class ConversationsAPI:
         Create a conversation with instructions and input.
         
         Args:
-            model: The model to use (e.g., 'spec-3-turbo:latest')
+            model: The model to use (e.g., 'spec-3-turbo')
             instructions: System instructions for the model
             input: User input/question
             max_tokens: Maximum tokens to generate
@@ -95,7 +95,7 @@ class ConversationsAPI:
             
         Example:
             response = client.conversations.create(
-                model="spec-3-turbo:latest",
+                model="spec-3-turbo",
                 instructions="You are a helpful assistant.",
                 input="What is machine learning?",
                 temperature=0.7
@@ -161,7 +161,7 @@ class ConversationsAPI:
             
         Example:
             stream = client.conversations.create_stream(
-                model="spec-3-turbo:latest",
+                model="spec-3-turbo",
                 instructions="You are a storyteller.",
                 input="Tell me a short story.",
                 stream=True

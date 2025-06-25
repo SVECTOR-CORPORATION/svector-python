@@ -64,7 +64,7 @@ from svector import SVECTOR
 
 client = SVECTOR(api_key="your-api-key")
 response = client.chat.create(
-    model="spec-3-turbo:latest",
+    model="spec-3-turbo",
     messages=[{"role": "user", "content": "Hello!"}]
 )
 ```

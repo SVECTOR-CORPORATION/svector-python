@@ -84,7 +84,7 @@ client = SVECTOR(api_key="your-api-key")
 
 # Conversation
 response = client.conversations.create(
-    model="spec-3-turbo:latest",
+    model="spec-3-turbo",
     instructions="You are a helpful assistant.",
     input="What is artificial intelligence?",
 )

@@ -163,7 +163,7 @@ def cmd_ask(args):
         
     try:
         response = client.chat.create(
-            model="spec-3-turbo:latest",
+            model="spec-3-turbo",
             messages=[{"role": "user", "content": args.question}],
             files=[{"type": "file", "id": args.file}]
         )
@@ -198,7 +198,7 @@ For more info: https://www.svector.co.in
     # Chat command
     chat_parser = subparsers.add_parser("chat", help="Send a chat message")
     chat_parser.add_argument("message", help="Message to send")
-    chat_parser.add_argument("--model", default="spec-3-turbo:latest", help="Model to use")
+    chat_parser.add_argument("--model", default="spec-3-turbo", help="Model to use")
     chat_parser.add_argument("--temperature", type=float, default=0.7, help="Temperature (0.0-2.0)")
     chat_parser.add_argument("--max-tokens", type=int, default=150, help="Max tokens")
     chat_parser.add_argument("--file", help="File ID for RAG")
@@ -207,7 +207,7 @@ For more info: https://www.svector.co.in
     # Stream command
     stream_parser = subparsers.add_parser("stream", help="Stream a chat response")
     stream_parser.add_argument("message", help="Message to send")
-    stream_parser.add_argument("--model", default="spec-3-turbo:latest", help="Model to use")
+    stream_parser.add_argument("--model", default="spec-3-turbo", help="Model to use")
     stream_parser.add_argument("--temperature", type=float, default=0.7, help="Temperature (0.0-2.0)")
     stream_parser.set_defaults(func=cmd_stream)
     

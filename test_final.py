@@ -21,7 +21,7 @@ def test_conversations():
     try:
         # Basic conversation
         response = client.conversations.create(
-            model="spec-3-turbo:latest",
+            model="spec-3-turbo",
             instructions="You are a helpful assistant. Keep responses concise.",
             input="What is 2+2?",
             max_tokens=20,
@@ -30,7 +30,7 @@ def test_conversations():
         
         # Conversation with context
         response = client.conversations.create(
-            model="spec-3-turbo:latest",
+            model="spec-3-turbo",
             instructions="You are a math tutor.",
             input="What's next?",
             context=["What is 2+2?", "2+2 equals 4."],
@@ -51,7 +51,7 @@ def test_streaming():
     try:
         print("Response: ", end="", flush=True)
         stream = client.conversations.create_stream(
-            model="spec-3-turbo:latest",
+            model="spec-3-turbo",
             instructions="You are helpful. Be very brief.",
             input="Say hello in exactly 3 words.",
             max_tokens=10,
@@ -79,7 +79,7 @@ def test_chat_completions():
     
     try:
         response = client.chat.create(
-            model="spec-3-turbo:latest",
+            model="spec-3-turbo",
             messages=[
                 {"role": "system", "content": "You are helpful."},
                 {"role": "user", "content": "Hi"}
@@ -99,7 +99,7 @@ async def test_async():
     try:
         async with AsyncSVECTOR(api_key=os.environ.get("SVECTOR_API_KEY", "test-key")) as client:
             response = await client.conversations.create(
-                model="spec-3-turbo:latest",
+                model="spec-3-turbo",
                 instructions="Be brief.",
                 input="Say hi",
                 max_tokens=5,
@@ -120,7 +120,7 @@ def test_error_handling():
     
     try:
         client.conversations.create(
-            model="spec-3-turbo:latest",
+            model="spec-3-turbo",
             instructions="Test",
             input="Test",
         )

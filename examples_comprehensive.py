@@ -25,7 +25,7 @@ def basic_conversation_example():
     print("-" * 30)
     
     response = client.conversations.create(
-        model="spec-3-turbo:latest",
+        model="spec-3-turbo",
         instructions="You are a helpful AI assistant that explains complex topics clearly.",
         input="What is machine learning?",
         temperature=0.7,
@@ -46,7 +46,7 @@ def conversation_with_context_example():
     client = SVECTOR()
     
     response = client.conversations.create(
-        model="spec-3-turbo:latest",
+        model="spec-3-turbo",
         instructions="You are a programming tutor that helps students learn coding.",
         input="Can you show me an example?",
         context=[
@@ -72,7 +72,7 @@ def streaming_conversation_example():
     print("Streaming Answer: ", end="", flush=True)
     
     stream = client.conversations.create_stream(
-        model="spec-3-turbo:latest",
+        model="spec-3-turbo",
         instructions="You are a creative storyteller who writes engaging short stories.",
         input="Tell me a short story about robots and humans working together.",
         stream=True
@@ -132,7 +132,7 @@ def document_processing_example():
         print("\n🔍 Asking questions about the document...")
         
         response = client.conversations.create(
-            model="spec-3-turbo:latest",
+            model="spec-3-turbo",
             instructions="You are a research assistant that analyzes documents and answers questions based on their content. Cite specific information from the documents when possible.",
             input="What are the key performance improvements mentioned in the report?",
             files=[{"type": "file", "id": file_response["file_id"]}],
@@ -153,7 +153,7 @@ def model_comparison_example():
     
     client = SVECTOR()
     
-    models = ["spec-3-turbo:latest", "theta-35-mini:latest"]
+    models = ["spec-3-turbo", "theta-35-mini"]
     prompt = "Explain quantum computing in simple terms."
     
     print(f"Comparing models for: '{prompt}'\n")
@@ -191,7 +191,7 @@ def advanced_chat_api_example():
     ]
     
     response = client.chat.create(
-        model="spec-3-turbo:latest",
+        model="spec-3-turbo",
         messages=messages,
         temperature=0.5
     )
@@ -211,7 +211,7 @@ def error_handling_example():
     try:
         client = SVECTOR(api_key="invalid-key")
         response = client.conversations.create(
-            model="spec-3-turbo:latest",
+            model="spec-3-turbo",
             instructions="You are helpful.",
             input="Hello"
         )
@@ -234,7 +234,7 @@ async def async_conversation_example():
         # Multiple async conversations
         tasks = [
             client.conversations.create(
-                model="spec-3-turbo:latest",
+                model="spec-3-turbo",
                 instructions="You are a helpful assistant.",
                 input=f"What is {topic}?"
             )
@@ -261,7 +261,7 @@ async def async_streaming_example():
         print("Streaming Response: ", end="", flush=True)
         
         stream = client.conversations.create_stream(
-            model="spec-3-turbo:latest",
+            model="spec-3-turbo",
             instructions="You are a creative poet.",
             input="Write a haiku about technology.",
             stream=True
@@ -290,7 +290,7 @@ def intelligent_chat_class_example():
             self.conversation_history.append(user_message)
             
             response = self.client.conversations.create(
-                model="spec-3-turbo:latest",
+                model="spec-3-turbo",
                 instructions=system_instructions or "You are a helpful and friendly AI assistant.",
                 input=user_message,
                 context=self.conversation_history[-10:],  # Keep last 10 messages
@@ -350,7 +350,7 @@ def document_analyzer_example():
             }
             
             response = self.client.conversations.create(
-                model="spec-3-turbo:latest",
+                model="spec-3-turbo",
                 instructions=instructions.get(analysis_type, instructions["insights"]),
                 input=query,
                 files=[{"type": "file", "id": file_id} for file_id in self.uploaded_files],
