@@ -5,7 +5,7 @@ with open("README.md", "r", encoding="utf-8") as fh:
 
 setup(
     name="svector-sdk",
-    version="1.3.0",
+    version="1.3.1",
     author="SVECTOR Team",
     author_email="support@svector.co.in",
     description="Official Python SDK for SVECTOR's AI models - Spec-3, Theta-35, and advanced reasoning systems",

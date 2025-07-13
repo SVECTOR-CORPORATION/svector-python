@@ -516,7 +516,7 @@ from svector import SVECTOR
 
 client = SVECTOR(
     api_key="your-api-key",
-    base_url="https://spec-chat.tech",           # Custom API endpoint
+    base_url="https://api.svector.co.in",           # Custom API endpoint
     timeout=30,                                  # Request timeout in seconds
     max_retries=3,                               # Retry failed requests
     verify_ssl=True,                             # SSL verification
