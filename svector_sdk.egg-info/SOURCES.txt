@@ -12,6 +12,7 @@ setup.py
 ./svector/conversations.py
 ./svector/errors.py
 ./svector/py.typed
+./svector/vision.py
 svector/__init__.py
 svector/cli.py
 svector/client.py
@@ -20,6 +21,7 @@ svector/client_old.py
 svector/conversations.py
 svector/errors.py
 svector/py.typed
+svector/vision.py
 svector_sdk.egg-info/PKG-INFO
 svector_sdk.egg-info/SOURCES.txt
 svector_sdk.egg-info/dependency_links.txt

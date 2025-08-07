@@ -5,6 +5,34 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.0.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.7.5] - 2025-08-07
+
+### Added - Comprehensive Vision API Enhancement
+- **Complete Vision API Parity**: Full feature parity with Node.js/JSR SDK
+- **Advanced Vision Methods**: 
+  - `analyze_with_confidence()` - Analysis with confidence scoring
+  - `batch_analyze()` - Batch processing for multiple images
+  - `create_response()` - Advanced input format compatibility
+  - `compare_images()` - Multi-image comparison
+  - `generate_caption()` - Social media caption generation with style options
+- **Enhanced Error Handling**: Better timeout handling and endpoint fallback
+- **Improved Retry Logic**: Smarter retry with exponential backoff
+- **Comprehensive Examples**: Complete example files matching Node.js patterns
+- **Updated Documentation**: Extensive README with all vision capabilities
+- **Utility Functions**: `encode_image()` and `create_data_url()` helpers
+- **Better Type Hints**: Improved type annotations for vision API
+
+### Enhanced
+- **Vision API Performance**: Reduced default timeout to 60s for better responsiveness
+- **Endpoint Management**: Dynamic baseURL support with fallback endpoints
+- **Logging**: Added detailed request logging for debugging
+- **Response Format**: Consistent response format across all vision methods
+
+### Fixed
+- **Timeout Issues**: Better handling of gateway timeouts (524 errors)
+- **Server Error Retries**: Proper 5xx error retry logic
+- **API Compatibility**: Full compatibility with SVECTOR vision endpoints
+
 ## [1.0.0] - 2025-06-17
 
 ### Added

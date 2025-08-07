@@ -20,6 +20,7 @@ from .conversations import AsyncConversationsAPI, ConversationsAPI
 from .errors import (APIError, AuthenticationError, InternalServerError,
                      NotFoundError, PermissionDeniedError, RateLimitError,
                      SVectorError, UnprocessableEntityError)
+from .vision import ResponsesAPI, VisionAPI
 
 
 class SVECTOR:
@@ -49,6 +50,15 @@ class SVECTOR:
             ]
         )
     """
+    
+    # Type annotations for API endpoints
+    conversations: ConversationsAPI
+    chat: 'ChatAPI'
+    models: 'ModelsAPI'
+    files: 'FilesAPI'
+    knowledge: 'KnowledgeAPI'
+    vision: VisionAPI
+    responses: ResponsesAPI
     
     def __init__(
         self,
@@ -86,6 +96,8 @@ class SVECTOR:
         self.models = ModelsAPI(self)
         self.files = FilesAPI(self)
         self.knowledge = KnowledgeAPI(self)
+        self.vision = VisionAPI(self)                # Vision API
+        self.responses = ResponsesAPI(self)          # Responses API (alias for vision)
         
     def request(
         self,

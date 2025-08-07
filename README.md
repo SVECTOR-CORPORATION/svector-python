@@ -39,6 +39,7 @@ print(response.output)
 - [Core Features](#core-features)
 - [Conversations API (Recommended)](#conversations-api-recommended)
 - [Chat Completions API (Advanced)](#chat-completions-api-advanced)
+- [Vision API](#vision-api)
 - [Streaming Responses](#streaming-responses)
 - [File Management & Document Processing](#file-management--document-processing)
 - [Models](#models)
@@ -83,6 +84,7 @@ client = SVECTOR(api_key="your-api-key-here")
 
 - **Conversations API** - Simple instructions + input interface
 - **Advanced Chat Completions** - Full control with role-based messages
+- **Vision API** - Image analysis, OCR, object detection, and accessibility descriptions
 - **Real-time Streaming** - Server-sent events for live responses
 - **File Processing** - Upload and process documents (PDF, DOCX, TXT, etc.)
 - **Knowledge Collections** - Organize files for enhanced RAG
@@ -211,6 +213,363 @@ response = client.chat.create(
         {"role": "user", "content": "Please review this Python code: def add(a, b): return a + b"}
     ],
 )
+```
+
+## Vision API
+
+SVECTOR's Vision API provides powerful image analysis capabilities including object detection, text extraction (OCR), accessibility descriptions, and more.
+
+### Basic Image Analysis
+
+#### Analyze image from URL
+
+```python
+from svector import SVECTOR
+
+client = SVECTOR()
+
+# Using the responses API (recommended for simple use cases)
+response = client.responses.create(
+    model="spec-3-turbo",
+    input=[{
+        "role": "user",
+        "content": [
+            {"type": "input_text", "text": "what's in this image?"},
+            {
+                "type": "input_image",
+                "image_url": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/dd/Gfp-wisconsin-madison-the-nature-boardwalk.jpg/2560px-Gfp-wisconsin-madison-the-nature-boardwalk.jpg",
+            },
+        ],
+    }],
+)
+
+print(response.output_text)
+```
+
+#### Analyze image from base64 data
+
+```python
+import base64
+from svector import SVECTOR
+
+client = SVECTOR()
+
+# Function to encode the image
+def encode_image(image_path):
+    with open(image_path, "rb") as image_file:
+        return base64.b64encode(image_file.read()).decode("utf-8")
+
+# Path to your image
+image_path = "path_to_your_image.jpg"
+
+# Getting the Base64 string
+base64_image = encode_image(image_path)
+
+response = client.responses.create(
+    model="spec-3-turbo",
+    input=[
+        {
+            "role": "user",
+            "content": [
+                { "type": "input_text", "text": "what's in this image?" },
+                {
+                    "type": "input_image",
+                    "image_url": f"data:image/jpeg;base64,{base64_image}",
+                },
+            ],
+        }
+    ],
+)
+
+print(response.output_text)
+```
+
+#### Analyze image from file upload
+
+```python
+from svector import SVECTOR
+
+client = SVECTOR()
+
+# Function to create a file with the Files API
+def create_file(file_path):
+    with open(file_path, "rb") as file_content:
+        result = client.files.create(
+            file=file_content,
+            purpose="vision",
+        )
+        return result.id
+
+# Getting the file ID
+file_id = create_file("path_to_your_image.jpg")
+
+response = client.responses.create(
+    model="spec-3-turbo",
+    input=[{
+        "role": "user",
+        "content": [
+            {"type": "input_text", "text": "what's in this image?"},
+            {
+                "type": "input_image",
+                "file_id": file_id,
+            },
+        ],
+    }],
+)
+
+print(response.output_text)
+```
+
+### Advanced Vision Capabilities
+
+#### Using the Vision API directly
+
+```python
+# Detailed image analysis
+response = client.vision.analyze_from_url(
+    image_url="https://example.com/image.jpg",
+    prompt="Describe this image in detail, including colors, objects, and composition.",
+    detail="high"
+)
+print(response.analysis)
+
+# Extract text from image (OCR)
+response = client.vision.extract_text(
+    image_url="https://example.com/document.jpg"
+)
+print(response.analysis)
+
+# Generate accessibility description
+response = client.vision.describe_for_accessibility(
+    image_url="https://example.com/chart.jpg"
+)
+print(response.analysis)
+
+# Detect specific objects
+response = client.vision.detect_objects(
+    image_url="https://example.com/scene.jpg",
+    object_types=["people", "cars", "buildings"]
+)
+print(response.analysis)
+
+# Generate social media captions
+response = client.vision.generate_caption(
+    image_url="https://example.com/photo.jpg",
+    style="casual"  # Options: professional, casual, funny, technical
+)
+print(response.analysis)
+```
+
+#### Compare multiple images
+
+```python
+images = [
+    {"url": "https://example.com/image1.jpg"},
+    {"url": "https://example.com/image2.jpg"},
+    {"base64": "base64_data_here"}
+]
+
+response = client.vision.compare_images(
+    images=images,
+    prompt="Compare these images and describe their similarities and differences."
+)
+print(response.analysis)
+```
+
+### Vision Response Object
+
+All vision methods return a `VisionResponse` object with the following properties:
+
+```python
+response = client.vision.analyze_from_url("https://example.com/image.jpg")
+
+print(response.analysis)      # The analysis text
+print(response.output_text)   # Alias for analysis (compatibility)
+print(response.usage)         # Token usage information
+print(response.request_id)    # Request ID for debugging
+```
+
+### Vision Error Handling
+
+```python
+from svector import SVECTOR, APIConnectionTimeoutError, RateLimitError
+
+client = SVECTOR()
+
+try:
+    response = client.vision.analyze_from_url(
+        image_url="https://example.com/large-image.jpg",
+        timeout=30,  # Custom timeout in seconds
+        detail="low"  # Use low detail for faster processing
+    )
+    print(response.analysis)
+except APIConnectionTimeoutError as e:
+    print(f"Request timed out: {e}")
+    print("Try using a smaller image or setting detail='low'")
+except RateLimitError as e:
+    print(f"Rate limit exceeded: {e}")
+except Exception as e:
+    print(f"Vision analysis failed: {e}")
+```
+
+### Complete Vision API Reference
+
+#### Advanced Vision Features
+
+```python
+# Confidence scoring - get confidence level with analysis
+result = client.vision.analyze_with_confidence(
+    image_url="https://example.com/image.jpg",
+    prompt="Analyze this image"
+)
+print(f"Analysis: {result['analysis']}")
+print(f"Confidence: {result['confidence']}%")
+
+# Batch processing - analyze multiple images
+images = [
+    {"image_url": "https://example.com/image1.jpg", "prompt": "Describe this"},
+    {"image_url": "https://example.com/image2.jpg", "prompt": "What's in this image?"}
+]
+results = client.vision.batch_analyze(images, delay=1.0)
+for i, result in enumerate(results):
+    print(f"Image {i+1}: {result['analysis']}")
+
+# Image comparison - compare multiple images
+images = [
+    {"url": "https://example.com/before.jpg"},
+    {"url": "https://example.com/after.jpg"}
+]
+response = client.vision.compare_images(
+    images=images,
+    prompt="Compare these images and describe the differences"
+)
+print(response.analysis)
+
+# Caption generation for social media
+styles = ["casual", "professional", "funny", "technical"]
+for style in styles:
+    response = client.vision.generate_caption(
+        image_url="https://example.com/photo.jpg",
+        style=style
+    )
+    print(f"{style.title()}: {response.analysis}")
+```
+
+#### Utility Functions
+
+```python
+from svector import encode_image, create_data_url
+
+# Encode local image to base64
+base64_string = encode_image("path/to/your/image.jpg")
+
+# Create data URL from base64
+data_url = create_data_url(base64_string, "image/jpeg")
+
+# Use with vision API
+response = client.vision.analyze_from_base64(
+    base64_data=base64_string,
+    prompt="Analyze this local image"
+)
+```
+
+#### Supported Image Formats
+
+- **PNG** (.png)
+- **JPEG** (.jpeg, .jpg)  
+- **WEBP** (.webp)
+- **GIF** (.gif) - Non-animated only
+
+#### Best Practices for Vision
+
+1. **Choose the right detail level**: Use `"high"` for complex images requiring detailed analysis
+2. **Optimize image size**: Smaller images process faster while maintaining quality
+3. **Use specific prompts**: Better prompts lead to more relevant analysis
+4. **Handle rate limits**: Add delays between batch requests
+5. **Validate images**: Ensure images meet format and content requirements
+6. **Use timeouts**: Set appropriate timeouts for large images
+7. **Error handling**: Always wrap vision calls in try-catch blocks
+
+#### Complete Vision Example
+
+```python
+import os
+import base64
+from svector import SVECTOR, encode_image
+
+class VisionAnalyzer:
+    def __init__(self, api_key: str):
+        self.client = SVECTOR(api_key=api_key, timeout=60)
+    
+    def analyze_image(self, image_path: str, prompt: str = None) -> str:
+        """Analyze a local image file"""
+        try:
+            # Method 1: Upload file and analyze by ID
+            with open(image_path, 'rb') as f:
+                file_response = self.client.files.create(
+                    file=f,
+                    purpose="vision",
+                    filename=os.path.basename(image_path)
+                )
+            
+            result = self.client.vision.analyze_from_file_id(
+                file_id=file_response["file_id"],
+                prompt=prompt or "Provide a comprehensive analysis of this image.",
+                model="spec-3-turbo",
+                max_tokens=800,
+                detail="high"
+            )
+            
+            return result.analysis
+            
+        except Exception as e:
+            return f"Analysis failed: {e}"
+    
+    def analyze_url(self, image_url: str, prompt: str = None) -> str:
+        """Analyze an image from URL"""
+        try:
+            result = self.client.vision.analyze_from_url(
+                image_url=image_url,
+                prompt=prompt or "Analyze this image in detail.",
+                model="spec-3-turbo",
+                detail="high"
+            )
+            return result.analysis
+        except Exception as e:
+            return f"Analysis failed: {e}"
+    
+    def extract_text(self, image_path: str) -> str:
+        """Extract text from image (OCR)"""
+        try:
+            base64_image = encode_image(image_path)
+            result = self.client.vision.extract_text(
+                image_base64=base64_image,
+                model="spec-3-turbo"
+            )
+            return result.analysis
+        except Exception as e:
+            return f"OCR failed: {e}"
+
+# Usage
+analyzer = VisionAnalyzer(api_key="your-api-key")
+
+# Analyze local image
+analysis = analyzer.analyze_image(
+    "path/to/image.jpg", 
+    "Describe the objects and colors in this image"
+)
+print(analysis)
+
+# Analyze web image
+analysis = analyzer.analyze_url(
+    "https://example.com/image.jpg",
+    "What emotions does this image convey?"
+)
+print(analysis)
+
+# Extract text
+text = analyzer.extract_text("path/to/document.jpg")
+print(f"Extracted text: {text}")
 ```
 
 ## Streaming Responses
