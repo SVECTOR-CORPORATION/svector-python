@@ -5,7 +5,7 @@ Official Python client for SVECTOR AI Models.
 Advanced conversational AI and language models with API.
 """
 
-__version__ = "1.7.5"
+__version__ = "1.7.6"
 __author__ = "SVECTOR Team"
 __email__ = "support@svector.co.in"
 __author__ = "SVECTOR Team"
@@ -18,7 +18,7 @@ from .conversations import (AsyncConversationsAPI, ConversationRequest,
 from .errors import (APIConnectionError, APIConnectionTimeoutError, APIError,
                      AuthenticationError, ConnectionError, InternalServerError,
                      NotFoundError, PermissionDeniedError, RateLimitError,
-                     ServerError, SVectorError, TimeoutError,
+                     ServerError, SVECTORError, TimeoutError,
                      UnprocessableEntityError, ValidationError)
 from .vision import (ResponsesAPI, VisionAPI, VisionResponse, create_data_url,
                      encode_image)
@@ -43,7 +43,7 @@ __all__ = [
     "create_data_url",
     
     # Error classes
-    "SVectorError",
+    "SVECTORError",
     "APIError", 
     "AuthenticationError",
     "RateLimitError",

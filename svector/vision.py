@@ -14,7 +14,7 @@ from typing import Any, Dict, List, Optional, Union
 import requests
 
 from .errors import (APIConnectionTimeoutError, APIError, AuthenticationError,
-                     RateLimitError, SVectorError)
+                     RateLimitError, SVECTORError)
 
 
 class VisionResponse:
@@ -59,7 +59,6 @@ class VisionAPI:
         endpoints = [
             f"{self.client.base_url}/api/chat/completions",
             "https://spec-chat.tech/api/chat/completions",
-            "https://spec-chat.tech/api/chat/completions"
         ]
         
         headers = {
@@ -73,10 +72,8 @@ class VisionAPI:
         print(f"🔍 Vision API: Starting request with {timeout}s timeout...")
         
         for endpoint_index, endpoint in enumerate(endpoints):
-            print(f"🌐 Trying endpoint {endpoint_index + 1}/{len(endpoints)}: {endpoint}")
             
             for retry in range(max_retries):
-                print(f"🔄 Attempt {retry + 1}/{max_retries} for endpoint {endpoint_index + 1}")
                 
                 try:
                     request_start = time.time()
@@ -94,7 +91,7 @@ class VisionAPI:
                     
                     if not response.ok:
                         error_text = response.text
-                        print(f"❌ HTTP {response.status_code}: {error_text}")
+                        print(f"HTTP {response.status_code}: {error_text}")
                         
                         # Handle specific HTTP status codes
                         if response.status_code == 504:
@@ -128,11 +125,9 @@ class VisionAPI:
                         continue
                     
                     result = response.json()
-                    print("✅ Vision API request successful")
                     return result
                     
                 except requests.exceptions.Timeout:
-                    print(f"⏰ Request timeout after {timeout}s")
                     is_last_retry = retry == max_retries - 1
                     is_last_endpoint = endpoint_index == len(endpoints) - 1
                     
@@ -144,28 +139,25 @@ class VisionAPI:
                         )
                     
                 except requests.exceptions.ConnectionError as e:
-                    print(f"🚨 Connection error: {e}")
                     is_last_retry = retry == max_retries - 1
                     is_last_endpoint = endpoint_index == len(endpoints) - 1
                     
                     if is_last_retry and is_last_endpoint:
-                        raise SVectorError("Network error: Unable to connect to vision API. Please check your internet connection.")
+                        raise SVECTORError("Network error: Unable to connect to vision API. Please check your internet connection.")
                     
                 except Exception as e:
-                    print(f"🚨 Request error: {type(e).__name__} - {e}")
                     is_last_retry = retry == max_retries - 1
                     is_last_endpoint = endpoint_index == len(endpoints) - 1
                     
                     if is_last_retry and is_last_endpoint:
-                        raise SVectorError(f"Vision API request failed: {e}")
+                        raise SVECTORError(f"Vision API request failed: {e}")
                 
                 # Exponential backoff for retries
                 if retry < max_retries - 1 or endpoint_index < len(endpoints) - 1:
                     delay = min(1000 * (2 ** retry), 5000) / 1000  # Convert to seconds
-                    print(f"⏳ Retrying in {delay}s...")
                     time.sleep(delay)
         
-        raise SVectorError("Vision API request failed after multiple retries on all endpoints")
+        raise SVECTORError("Vision API request failed after multiple retries on all endpoints")
     
     def analyze(
         self,
@@ -207,14 +199,6 @@ class VisionAPI:
         """
         if not any([image_url, image_base64, file_id]):
             raise ValueError("Must provide one of: image_url, image_base64, or file_id")
-        
-        # Log the image being processed
-        if image_url:
-            print(f"🖼️ Processing image from URL: {image_url[:80]}...")
-        elif image_base64:
-            print(f"🖼️ Processing image from base64 data ({len(image_base64)} chars)")
-        elif file_id:
-            print(f"🖼️ Processing image from file ID: {file_id}")
         
         message_content: List[Dict[str, Any]] = [
             {
@@ -264,7 +248,7 @@ class VisionAPI:
             
             analysis = response.get("choices", [{}])[0].get("message", {}).get("content", "")
             if not analysis:
-                raise SVectorError("No analysis content returned from API")
+                raise SVECTORError("No analysis content returned from API")
             
             return VisionResponse({
                 "analysis": analysis,
@@ -297,7 +281,7 @@ class VisionAPI:
             elif "429" in error_message or "Rate limit" in error_message:
                 raise RateLimitError("Rate limit exceeded. Please wait before retrying.")
             
-            raise SVectorError(f"Vision analysis failed: {error_message}")
+            raise SVECTORError(f"Vision analysis failed: {error_message}")
     
     def analyze_from_url(
         self,
@@ -594,7 +578,7 @@ class VisionAPI:
             
             analysis = response.get("choices", [{}])[0].get("message", {}).get("content", "")
             if not analysis:
-                raise SVectorError("No analysis content returned from API")
+                raise SVECTORError("No analysis content returned from API")
             
             return VisionResponse({
                 "analysis": analysis,
@@ -603,7 +587,7 @@ class VisionAPI:
             })
             
         except Exception as e:
-            raise SVectorError(f"Image comparison failed: {e}")
+            raise SVECTORError(f"Image comparison failed: {e}")
     
     def analyze_with_confidence(
         self,

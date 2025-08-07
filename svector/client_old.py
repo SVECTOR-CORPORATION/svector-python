@@ -9,7 +9,7 @@ from typing import Any, BinaryIO, Dict, Iterator, List, Optional, Union
 import requests
 
 from .errors import (APIError, AuthenticationError, NotFoundError,
-                     PermissionDeniedError, RateLimitError, SVectorError,
+                     PermissionDeniedError, RateLimitError, SVECTORError,
                      UnprocessableEntityError)
 
 
@@ -110,18 +110,18 @@ class SVECTOR:
                 
             except requests.exceptions.Timeout:
                 if attempt == self.max_retries:
-                    raise SVectorError("Request timeout")
+                    raise SVECTORError("Request timeout")
                 time.sleep(2 ** attempt)  # Exponential backoff
             except requests.exceptions.ConnectionError:
                 if attempt == self.max_retries:
-                    raise SVectorError("Connection error")
+                    raise SVECTORError("Connection error")
                 time.sleep(2 ** attempt)
             except (AuthenticationError, NotFoundError, PermissionDeniedError, 
                    UnprocessableEntityError, RateLimitError) as e:
                 # Don't retry these errors
                 raise e
                 
-        raise SVectorError("Max retries exceeded")
+        raise SVECTORError("Max retries exceeded")
 
 
 class ChatAPI:

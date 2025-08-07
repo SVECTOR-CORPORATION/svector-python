@@ -5,7 +5,7 @@ Comprehensive error handling with specific error types for different scenarios.
 """
 
 
-class SVectorError(Exception):
+class SVECTORError(Exception):
     """Base exception for all SVECTOR API errors"""
     def __init__(self, message, status_code=None, request_id=None, headers=None):
         super().__init__(message)
@@ -19,66 +19,66 @@ class SVectorError(Exception):
         return super().__str__()
 
 
-class APIError(SVectorError):
+class APIError(SVECTORError):
     """General API error"""
     pass
 
 
-class AuthenticationError(SVectorError):
+class AuthenticationError(SVECTORError):
     """Authentication failed - invalid API key or authentication issues"""
     pass
 
 
-class PermissionDeniedError(SVectorError):
+class PermissionDeniedError(SVECTORError):
     """Permission denied - insufficient permissions for the resource"""
     pass
 
 
-class NotFoundError(SVectorError):
+class NotFoundError(SVECTORError):
     """Resource not found - requested resource does not exist"""
     pass
 
 
-class RateLimitError(SVectorError):
+class RateLimitError(SVECTORError):
     """Rate limit exceeded - too many requests in a given time period"""
     pass
 
 
-class UnprocessableEntityError(SVectorError):
+class UnprocessableEntityError(SVECTORError):
     """Unprocessable entity - invalid request data or parameters"""
     pass
 
 
-class InternalServerError(SVectorError):
+class InternalServerError(SVECTORError):
     """Internal server error - server-side issues"""
     pass
 
 
-class APIConnectionError(SVectorError):
+class APIConnectionError(SVECTORError):
     """Network connection issues - failed to connect to API"""
     pass
 
 
-class APIConnectionTimeoutError(SVectorError):
+class APIConnectionTimeoutError(SVECTORError):
     """Request timeout - request took too long to complete"""
     pass
 
 
-class ValidationError(SVectorError):
+class ValidationError(SVECTORError):
     """Validation error - invalid input parameters"""
     pass
 
 
-class ServerError(SVectorError):
+class ServerError(SVECTORError):
     """Server-side error"""
     pass
 
 
-class ConnectionError(SVectorError):
+class ConnectionError(SVECTORError):
     """Connection error"""
     pass
 
 
-class TimeoutError(SVectorError):
+class TimeoutError(SVECTORError):
     """Timeout error"""
     pass

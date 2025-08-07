@@ -18,7 +18,7 @@ import requests
 
 from .conversations import AsyncConversationsAPI, ConversationsAPI
 from .errors import (APIError, AuthenticationError, NotFoundError,
-                     PermissionDeniedError, RateLimitError, SVectorError,
+                     PermissionDeniedError, RateLimitError, SVECTORError,
                      UnprocessableEntityError)
 
 
@@ -154,18 +154,18 @@ class SVECTOR:
                     
             except requests.exceptions.Timeout:
                 if attempt == max_retries:
-                    raise SVectorError("Request timeout")
+                    raise SVECTORError("Request timeout")
                 time.sleep(2 ** attempt)  # Exponential backoff
             except requests.exceptions.ConnectionError:
                 if attempt == max_retries:
-                    raise SVectorError("Connection error")
+                    raise SVECTORError("Connection error")
                 time.sleep(2 ** attempt)
             except (AuthenticationError, NotFoundError, PermissionDeniedError, 
                    UnprocessableEntityError, RateLimitError, APIError) as e:
                 # Don't retry these errors
                 raise e
                 
-        raise SVectorError("Max retries exceeded")
+        raise SVECTORError("Max retries exceeded")
     
     def _handle_response_errors(self, response: requests.Response):
         """Handle HTTP response errors"""
@@ -304,11 +304,11 @@ class AsyncSVECTOR:
                     
             except asyncio.TimeoutError:
                 if attempt == self.max_retries:
-                    raise SVectorError("Request timeout")
+                    raise SVECTORError("Request timeout")
                 await asyncio.sleep(2 ** attempt)
             except aiohttp.ClientError:
                 if attempt == self.max_retries:
-                    raise SVectorError("Connection error")
+                    raise SVECTORError("Connection error")
                 await asyncio.sleep(2 ** attempt)
                 
     async def _handle_response_errors(self, response: aiohttp.ClientResponse):
